@@ -1,0 +1,29 @@
+main 
+{
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    width: 100%;
+}
+
+.createNotePage 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 200px;
+    margin-left: 100px;
+}
+
+.card 
+{
+    display: flex;
+    flex-direction: column;
+    margin-right: 100px;
+}
+
+
+
+.a{
+    background-color: red;
+}

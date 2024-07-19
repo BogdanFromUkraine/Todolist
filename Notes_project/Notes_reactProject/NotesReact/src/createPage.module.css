@@ -1,0 +1,16 @@
+ul, li {
+    list-style-type: none;
+}
+
+
+
+.input 
+{
+    height: 40px;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
