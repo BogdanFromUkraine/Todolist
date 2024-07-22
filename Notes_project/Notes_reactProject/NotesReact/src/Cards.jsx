@@ -79,7 +79,6 @@ const listVariable = {
           <Heading size='md'>
             <span onClick={() => {handleClick(e.id)}} >
             {e.title}
-            {e.isCompleted ? "1": "0"}
             </span>
             
             </Heading>
