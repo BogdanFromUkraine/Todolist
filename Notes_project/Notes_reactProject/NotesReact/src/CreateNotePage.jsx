@@ -3,18 +3,21 @@ import { useEffect, useState } from "react";
 import CreateNote from "./services/createNote"
 import {motion} from "framer-motion"
 import styles from "./createPage.module.css"
+import { useStores } from "../store/root-store-context";
+import { observer } from "mobx-react-lite";
 
 
 
-export default function CreateNotePage({pointer})
+export const CreateNotePage = observer(() =>
 {
  const [title, setTitle] = useState();
  const [description, setDescription] = useState();
 
+ const {create_Note} = useStores();
+
 async function handleClick() 
 {
-    const response = await CreateNote(title, description);
-    pointer(true);
+    create_Note(title, description);
 }
 const pVariants = {
     hidden:  {
@@ -60,4 +63,4 @@ const pVariants = {
    
   
     </>
-}
+})

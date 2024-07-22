@@ -6,11 +6,16 @@ import {delay, motion} from "framer-motion"
 import Lottie from "lottie-react"
 import animationData from "./animation/Animation - 1721404943767.json"
 import { useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useStores } from '../store/root-store-context';
 
 
-export default function Cards({notes, pointer, setNotes})
+export const Cards = observer(({notes}) =>
 {
   const [deletingItem, setDeletingItem] = useState(null);
+
+  const {remove_Note, update_Note} = useStores();
+
 function handleDelete(id) 
 {
   notes.map((e) => 
@@ -26,8 +31,7 @@ function handleDelete(id)
 
           //видалення елемента
           setTimeout(() => {
-            RemoveNote(e.id);
-            pointer(true);
+            remove_Note(e.id);
           }, 5000)
           
         }
@@ -38,8 +42,7 @@ function handleDelete(id)
 
 function handleClick(id) 
 {
-  UpdateNote(id);
-  pointer(true);
+ update_Note(id);
 }
 const listVariable = {
   visible: i => ({
@@ -98,4 +101,4 @@ const listVariable = {
 
     
 
-}
+})
