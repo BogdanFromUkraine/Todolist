@@ -1,10 +1,11 @@
 import axios from "axios"
+import data from "../data.json"
 
 export default async function UpdateNote(id) 
 {
    
    try {
-      const response = await axios.put("https://localhost:7278/api/Notes", id, 
+      const response = await axios.put( data.localhost + "Notes", id, 
       {
          headers: 
          {

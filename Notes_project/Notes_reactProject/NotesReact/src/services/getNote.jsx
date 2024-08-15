@@ -1,11 +1,12 @@
 import axios from "axios"
+import data from "../data.json"
 
 export default async function GetNote() 
 {
    const Id = 1;
    
    try {
-      const response = await axios.get("https://localhost:7278/api/Notes/ReciveNote", 
+      const response = await axios.get(data.localhost + "Notes/ReciveNote", 
       {
          params: {Id}
       })

@@ -1,11 +1,12 @@
 import axios from "axios"
+import data from "../data.json"
 
 export default async function RemoveNote(id) 
 {
    const Id = id;
    
    try {
-      const response = await axios.delete("https://localhost:7278/api/Notes", 
+      const response = await axios.delete( data.localhost + "Notes", 
       {
          params: {Id}
       })

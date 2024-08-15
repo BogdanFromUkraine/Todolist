@@ -1,10 +1,11 @@
 import axios from "axios"
+import data from "../data.json"
 
 export default async function CreateNote(title, description) 
 {
    
    try {
-      const response = await axios.post("https://localhost:7278/api/Notes/Create",
+      const response = await axios.post(data.localhost + "Notes/Create",
       {
          Title: title,
          Description: description
