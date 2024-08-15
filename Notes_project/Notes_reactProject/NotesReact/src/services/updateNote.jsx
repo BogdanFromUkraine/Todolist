@@ -1,5 +1,5 @@
 import axios from "axios"
-import data from "../data.json"
+import data from "../dataJSON/data.json"
 
 export default async function UpdateNote(id) 
 {

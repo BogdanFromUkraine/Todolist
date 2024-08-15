@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import './App.css'
+import './styles/App.css'
 import GetAllNotes from './services/getAllNotes';
 import {Cards} from './Cards';
 import {CreateNotePage} from './CreateNotePage';
-import styles from "./main.module.css"
+import styles from "./styles/main.module.css"
 import { observer } from "mobx-react-lite";
 import { useStores } from '../store/root-store-context';
 

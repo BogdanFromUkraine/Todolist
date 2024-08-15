@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
+import './styles/index.css'
 import {App} from "./App.jsx"
 import { RootStoreContext } from '../store/root-store-context.ts'
 import DataStore from '../store/store.js'

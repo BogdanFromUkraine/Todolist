@@ -2,7 +2,7 @@ import { Button, Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import CreateNote from "./services/createNote"
 import {motion} from "framer-motion"
-import styles from "./createPage.module.css"
+import styles from "./styles/createPage.module.css"
 import { useStores } from "../store/root-store-context";
 import { observer } from "mobx-react-lite";
 

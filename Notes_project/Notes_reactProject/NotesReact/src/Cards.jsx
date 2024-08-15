@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, Heading, Text, Button, transition } from '@chakra-ui/react'
 import RemoveNote from './services/removeNote';
-import styles from "./card.module.css"
+import styles from "./styles/card.module.css"
 import UpdateNote from './services/updateNote';
 import {delay, motion} from "framer-motion"
 import Lottie from "lottie-react"
