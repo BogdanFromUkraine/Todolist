@@ -15,10 +15,10 @@ class DataStore
     isNoteChanged = false;
 
 
-    create_Note = async (title, description) => 
+    create_Note = async (title, description, photoCode) => 
         {
             try {
-                CreateNote(title, description);
+                CreateNote(title, description, photoCode);
             this.get_AllNotes();
             } catch (error) {
                 

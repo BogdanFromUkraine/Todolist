@@ -12,13 +12,29 @@ export const CreateNotePage = observer(() =>
 {
  const [title, setTitle] = useState();
  const [description, setDescription] = useState();
+ const [photoCode, setPhotoCode] = useState();
 
  const {create_Note} = useStores();
 
 async function handleClick() 
 {
-    create_Note(title, description);
+    create_Note(title, description, photoCode);
 }
+
+async function uploadPhoto(e) 
+{
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+        console.log(reader.result);
+        setPhotoCode(reader.result);
+    };
+    reader.onerror = error => {
+        console.log("Error: ", error);
+    };
+    console.log(e);
+}
+
 const pVariants = {
     hidden:  {
         x: -1000,
@@ -48,6 +64,13 @@ const pVariants = {
     placeholder="Enter description"
     onChange={e => setDescription(e.target.value)}
     className={styles.input}/>
+
+    <Input
+    accept="image/*"
+    type="file"
+    onChange={e => uploadPhoto(e)}/>
+
+    <img src={photoCode} />
     
     <motion.button
      whileHover={{

@@ -88,6 +88,7 @@ const listVariable = {
            {e.description}
           </Text>
           <Button  onClick={() => {handleDelete(e.id)}}>X</Button>
+          <img src={e.photoCode} width="300" height="100" />
         </CardBody>
       </Card>)}
 
