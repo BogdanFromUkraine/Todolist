@@ -6,6 +6,7 @@ import {CreateNotePage} from './CreateNotePage';
 import styles from "./styles/main.module.css"
 import { observer } from "mobx-react-lite";
 import { useStores } from '../store/root-store-context';
+import Navbar from './Navbar';
 
 
 
@@ -60,6 +61,7 @@ export const App = observer(()=>
     
   return (
    <>
+   <Navbar/>
    <main className={styles}>
     <div className={styles.createNotePage}>
     <CreateNotePage/>
@@ -68,6 +70,7 @@ export const App = observer(()=>
     <Cards notes={notess} />
     </div>
    </main>
+   <footer>FOOTER</footer>
     </>
 )})
 
