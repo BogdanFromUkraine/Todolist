@@ -18,7 +18,7 @@ class DataStore
     create_Note = async (title, description, photoCode) => 
         {
             try {
-                CreateNote(title, description, photoCode);
+                await CreateNote(title, description, photoCode);
             this.get_AllNotes();
             } catch (error) {
                 
@@ -48,7 +48,7 @@ class DataStore
     remove_Note = async (id) => 
         {
             try {
-                RemoveNote(id);
+                await RemoveNote(id);
                 this.get_AllNotes();
                 
             } catch (error) {
@@ -60,7 +60,7 @@ class DataStore
     update_Note = async (id) => 
         {
             try {
-                UpdateNote(id);
+                await UpdateNote(id);
                 this.get_AllNotes();
             } catch (error) {
                 
