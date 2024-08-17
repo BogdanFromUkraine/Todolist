@@ -1,4 +1,8 @@
+import SideBar from "./SideBar";
+
 export default function Group() 
 {
-    return <div>Group</div>
+    return <div>
+        <SideBar/>
+    </div>
 }
