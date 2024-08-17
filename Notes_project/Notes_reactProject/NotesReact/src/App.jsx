@@ -34,17 +34,17 @@ export const App = observer(()=>
            errorElement: <div>404 Not Found</div>,
           },
           {
-            path: '/Group',
+            path: 'Group',
             element: <Group/>,
            errorElement: <div>404 Not Found</div>,
           },
           {
-            path: '/People',
+            path: 'People',
             element: <People/>,
            errorElement: <div>404 Not Found</div>,
           },
           {
-            path: '/User',
+            path: 'User',
             element: <User/>,
            errorElement: <div>404 Not Found</div>,
           },
