@@ -1,8 +1,6 @@
 import { Card, CardHeader, CardBody, Heading, Text, Button, transition } from '@chakra-ui/react'
-import RemoveNote from './services/removeNote';
 import styles from "./styles/card.module.css"
-import UpdateNote from './services/updateNote';
-import {delay, motion} from "framer-motion"
+import { motion} from "framer-motion"
 import Lottie from "lottie-react"
 import animationData from "./animation/Animation - 1721404943767.json"
 import { useState } from 'react';
@@ -61,6 +59,7 @@ const listVariable = {
       {notes.map((e, i) =>
       {
        return  <motion.li
+       key={e.id}
        className={styles.card}
        variants={listVariable} 
        initial="hidden"

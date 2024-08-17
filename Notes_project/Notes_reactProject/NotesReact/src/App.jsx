@@ -1,49 +1,13 @@
 import { useEffect, useState } from 'react'
 import './styles/App.css'
-import GetAllNotes from './services/getAllNotes';
-import {Cards} from './Cards';
-import {CreateNotePage} from './CreateNotePage';
-import styles from "./styles/main.module.css"
 import { observer } from "mobx-react-lite";
 import { useStores } from '../store/root-store-context';
-import Navbar from './Navbar';
-
-
-
-// function App() {
-//   const [notes, setNotes] = useState([{id: null, title: null, description: null, isCompleted: null}]);
-//   const [pointer, setPointer] = useState(false);
-
-//    //const {notesSSSSS} = useStores();
-//   // console.log(notesSSSSS);
-
-  
-
-//   useEffect(()=>
-//     {
-//       async function foo() 
-//       {
-
-//         console.log(await GetAllNotes());
-//         setNotes(await GetAllNotes());
-//       }
-//       foo();
-//       setPointer(false);
-  
-//     },[pointer])
-//   return (
-//    <>
-//    <main className={styles}>
-//     <div className={styles.createNotePage}>
-//     <CreateNotePage  pointer={setPointer}/>
-//     </div>
-//     <div className={styles.card}>
-//     <Cards notes={notes} pointer={setPointer} setNotes={setNotes} setPointer={setPointer}/>
-//     </div>
-//    </main>
-//     </>
-//   )
-// }
+import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import MainPage from './MainPage';
+import Group from './Group';
+import People from './People';
+import User from './User';
+import Root from './Root';
 
 export const App = observer(()=>
   {
@@ -58,20 +22,43 @@ export const App = observer(()=>
       foo();
   
     },[])
+
+    const router = createBrowserRouter([
+      {
+        path: '/',
+        element: <Root/>,
+        children: [
+          {
+            path: '/',
+            element: <MainPage notess={notess} />,
+           errorElement: <div>404 Not Found</div>,
+          },
+          {
+            path: '/Group',
+            element: <Group/>,
+           errorElement: <div>404 Not Found</div>,
+          },
+          {
+            path: '/People',
+            element: <People/>,
+           errorElement: <div>404 Not Found</div>,
+          },
+          {
+            path: '/User',
+            element: <User/>,
+           errorElement: <div>404 Not Found</div>,
+          },
+        ]
+      },
+
+    ])
     
   return (
    <>
-   <Navbar/>
-   <main className={styles}>
-    <div className={styles.createNotePage}>
-    <CreateNotePage/>
-    </div>
-    <div className={styles.card}>
-    <Cards notes={notess} />
-    </div>
-   </main>
+   <RouterProvider router={router} >
+   <Root/>
    <footer>FOOTER</footer>
+   </RouterProvider>
     </>
 )})
 
- //export default App
