@@ -10,8 +10,5 @@ namespace ProjectTrackingSpotify.DataAccess.Repository.IRepository
 {
     public interface INotesRepository : IRepository<Notes>
     {
-        //ці два методи асинхронні
-        Task Update(Notes notes);
-        Task Save();
     }
 }

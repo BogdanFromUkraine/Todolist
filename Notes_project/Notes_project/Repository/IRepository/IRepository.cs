@@ -15,6 +15,7 @@ namespace WebApp.DataAccess.Repository.IRepository
         Task Add(T entity); //цей метод асинхронний черз Task
         Task Remove(T entity);
 
-       
+        Task Update(T entity);
+        Task Save();
     }
 }

@@ -20,14 +20,5 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             _db = db;
         }
 
-        public async Task Save()
-        {
-            _db.SaveChanges();
-        }
-
-        public async Task Update(Notes notes)
-        {
-            _db.Notes.Update(notes);   
-        }
     }
 }

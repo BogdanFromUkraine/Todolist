@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Notes_project.DataAccess;
+using Notes_project.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,15 @@ namespace WebApp.DataAccess.Repository
             dbSet.Remove(entity);
         }
 
-       
+        public async Task Save()
+        {
+            _db.SaveChanges();
+        }
+
+        public async Task Update(T entity)
+        {
+            dbSet.Update(entity);
+        }
+
     }
 }
