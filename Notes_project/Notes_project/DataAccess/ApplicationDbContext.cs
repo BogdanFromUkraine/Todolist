@@ -11,5 +11,6 @@ namespace Notes_project.DataAccess
         }
 
         public DbSet<Notes> Notes { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

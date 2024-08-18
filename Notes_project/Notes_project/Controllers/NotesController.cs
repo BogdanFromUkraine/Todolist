@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Notes_project.Models;
+using Notes_project.services;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 
 namespace Notes_project.Controllers
@@ -10,13 +12,15 @@ namespace Notes_project.Controllers
     public class NotesController : ControllerBase
     {
         private readonly INotesRepository _notesRepository;
-
-        public NotesController(INotesRepository notesRepository)
+        private readonly IUserService _userService;
+        public NotesController(INotesRepository notesRepository, IUserService userService)
         {
             _notesRepository = notesRepository;
+            _userService = userService;
         }
 
         [HttpGet("ReciveNote")]
+        [Authorize]
         public IActionResult ReciveNote([FromQuery] int Id) 
         {
             var note = _notesRepository.Get(u => u.Id == Id);
@@ -24,6 +28,7 @@ namespace Notes_project.Controllers
         }
 
         [HttpGet("GetAllNotes")]
+        [Authorize]
         public IActionResult GetAllNotes() 
         {
             var allNotes = _notesRepository.GetAll();
@@ -31,7 +36,7 @@ namespace Notes_project.Controllers
         }
 
         [HttpPost("Create")]
-
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] Notes note) 
         {
            await _notesRepository.Add(note);
@@ -39,8 +44,9 @@ namespace Notes_project.Controllers
 
             return Ok("Ви успішно створили замітку");
         }
-
+        
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> Delete([FromQuery] int Id) 
         {
             Notes note =  _notesRepository.Get(u => u.Id == Id);
@@ -53,6 +59,7 @@ namespace Notes_project.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public IActionResult UpdateNote([FromBody] int Id) 
         {
             Notes note = _notesRepository.Get(u => u.Id == Id);
@@ -64,6 +71,20 @@ namespace Notes_project.Controllers
             _notesRepository.Save();
 
             return Ok();
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login(string userName, string email, string password)
+        {
+            var JwtToken = _userService.Login(email, password);
+            return Ok(JwtToken);
+        }
+
+        [HttpPost("Register")]
+        public IActionResult Register(string userName, string email, string password)
+        {
+            var JwtToken = _userService.Register(userName, email, password);
+            return Ok(JwtToken);
         }
     }
 }
