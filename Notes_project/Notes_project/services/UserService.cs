@@ -1,4 +1,5 @@
 ﻿using Notes_project.Models;
+using Notes_project.services.Authentication;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 
 namespace Notes_project.services

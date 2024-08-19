@@ -1,6 +1,6 @@
 ﻿using Notes_project.Models;
 
-namespace Notes_project.services
+namespace Notes_project.services.Authentication
 {
     public interface IJwtProvider
     {

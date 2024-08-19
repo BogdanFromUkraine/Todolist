@@ -1,4 +1,4 @@
-﻿namespace Notes_project.services
+﻿namespace Notes_project.services.Authentication
 {
     public class PasswordHasher : IPasswordHasher
     {

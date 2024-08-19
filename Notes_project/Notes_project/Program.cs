@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Notes_project.DataAccess;
 using Notes_project.services;
+using Notes_project.services.Authentication;
 using ProjectTrackingSpotify.DataAccess.Repository;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 using System.Security.Cryptography;

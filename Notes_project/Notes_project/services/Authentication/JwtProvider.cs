@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Notes_project.services
+namespace Notes_project.services.Authentication
 {
     public class JwtProvider : IJwtProvider
     {
@@ -13,7 +13,7 @@ namespace Notes_project.services
         {
             _config = config;
         }
-        public string GenerateToken(User user) 
+        public string GenerateToken(User user)
         {
             //створюю додаткову інформацію, щоб це скомпанувати це у JWT токен і потім витягнути додаткову інфу
             Claim[] claim = [

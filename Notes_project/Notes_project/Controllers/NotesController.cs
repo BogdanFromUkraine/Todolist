@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Notes_project.Models;
-using Notes_project.services;
+using Notes_project.services.Authentication;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 
 namespace Notes_project.Controllers
