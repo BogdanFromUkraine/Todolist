@@ -1,10 +1,16 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Notes_project.DataAccess;
+using Notes_project.Enum;
+using Notes_project.Extensions;
+using Notes_project.Models;
 using Notes_project.services;
 using Notes_project.services.Authentication;
+using Notes_project.Services;
 using ProjectTrackingSpotify.DataAccess.Repository;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 using System.Security.Cryptography;
@@ -37,10 +43,15 @@ namespace Notes_project
 
             builder.Services.AddDbContext<ApplicationDbContext>(option =>
              option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            
 
             //створив Configuration, щоб получити secret key
             var configuration = builder.Configuration;
+
+            //створюю конфігурацію, щоб пізніше переадти через DI
+            builder.Services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
+            
+
+
 
             
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -72,6 +83,7 @@ namespace Notes_project
                         }
                     };
                 });
+
             builder.Services.AddAuthorization();
 
             builder.Services.AddScoped<INotesRepository, NotesRepository>();
@@ -79,6 +91,8 @@ namespace Notes_project
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IJwtProvider, JwtProvider>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IPermissionService, PermissionService>();
+            builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -104,6 +118,11 @@ namespace Notes_project
             app.UseAuthorization();
 
             app.UseCors("reactProject");
+
+            app.MapGet("get", () =>
+            {
+                return Results.Ok("fjdlk");
+            }).RequireAuthorization().RequirePermissions(Enum.Permission.Create);
 
             app.Run();
         }

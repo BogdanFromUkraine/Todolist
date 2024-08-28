@@ -36,6 +36,7 @@ namespace Notes_project.Controllers
         }
 
         [HttpPost("Create")]
+        
         [Authorize]
         public async Task<IActionResult> Create([FromBody] Notes note) 
         {

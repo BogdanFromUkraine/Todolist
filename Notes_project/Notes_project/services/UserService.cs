@@ -31,8 +31,9 @@ namespace Notes_project.services
             var user = User.Create(Guid.NewGuid(), userName, hashedPassword, email);
 
             //збереження user до бд
-            await _userRepository.Add(user);
-            await _userRepository.Save();
+          //  await _userRepository.Add(user);
+            _userRepository.AddTest(user).GetAwaiter().GetResult();
+           // _userRepository.Save().GetAwaiter().GetResult();
 
 
         }

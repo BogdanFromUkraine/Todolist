@@ -2,6 +2,10 @@
 {
     public class User
     {
+        public User()
+        {
+            
+        }
         // я створив простий model, просто добавив метод по створення юсера, це зручно
         private User(Guid id, string userName, string passwordHash, string email) 
         {
@@ -15,6 +19,9 @@
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
+
+        public ICollection<Role> Roles { get; set; } = [];
+
 
         public static User Create(Guid id, string userName, string passwordHash, string email) 
         {

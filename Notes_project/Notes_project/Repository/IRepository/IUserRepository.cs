@@ -10,5 +10,8 @@ namespace ProjectTrackingSpotify.DataAccess.Repository.IRepository
 {
     public interface IUserRepository : IRepository<User>
     {
+        public  Task<HashSet<Notes_project.Enum.Permission>> GetUserPermission(Guid userId);
+
+        public Task AddTest(User user);
     }
 }

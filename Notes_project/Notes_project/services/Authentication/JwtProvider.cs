@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Notes_project.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -16,10 +17,13 @@ namespace Notes_project.services.Authentication
         public string GenerateToken(User user)
         {
             //створюю додаткову інформацію, щоб це скомпанувати це у JWT токен і потім витягнути додаткову інфу
-            Claim[] claim = [
-                new("userId", user.Id.ToString()),
-                new("userName", user.UserName)
-            ];
+            var claims = new List<Claim>() 
+            {
+                new Claim("userId", user.Id.ToString())
+            };
+            //Claim[] claim = [
+            //    new("userId", user.Id.ToString()),
+            //];
 
             //алгоритм за яким буде кодуватися токен
             var signingCredentials = new SigningCredentials(
@@ -28,7 +32,7 @@ namespace Notes_project.services.Authentication
 
             //створення jwt токену
             var token = new JwtSecurityToken(
-                claims: claim,
+                claims: claims,
                 signingCredentials: signingCredentials,
                 expires: DateTime.UtcNow.AddHours(12));
 

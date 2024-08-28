@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Notes_project.DataAccess;
+using Notes_project.Enum;
 using Notes_project.Models;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace WebApp.DataAccess.Repository
         {
              _db.Add(entity);
         }
+
 
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
