@@ -65,8 +65,53 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             
         }
 
-       
 
+        public async Task<ICollection<Notes>> GetAllUserNotes(Guid userId) 
+        {
+            var notes = await _db.User
+                .Where(u => userId == u.Id)
+                .Include(u => u.Notes)
+                .SelectMany (u => u.Notes)
+                .ToListAsync();
+
+            return notes;
+        }
+        public async Task<Notes> GetUserNotes(Guid userId, int noteId)
+        {
+
+            var user = await _db.User
+                .Include(u => u.Notes)  
+                .FirstOrDefaultAsync(n => n.Id == userId);
+
+            var note = user.Notes.FirstOrDefault(n => n.Id == noteId);
+
+            return note;
+        }
+
+        public async Task RemoveUserNote(Guid userId, int noteId) 
+        {
+            var user = await _db.User
+               .Include(u => u.Notes)
+               .FirstOrDefaultAsync(n => n.Id == userId);
+
+            var note = user.Notes.FirstOrDefault(n => n.Id == noteId);
+
+            user.Notes.Remove(note);
+        }
+
+        public async Task UpdateUserNote(Guid userId, int noteId) 
+        {
+            var user = await _db.User
+              .Include(u => u.Notes)
+              .FirstOrDefaultAsync(n => n.Id == userId);
+
+            var note = user.Notes.FirstOrDefault(n => n.Id == noteId);
+
+            note.IsCompleted = note.IsCompleted ? false : true;
+
+            _db.Update(note);
+
+        }
 
         public async Task AddTest(User user) 
         {

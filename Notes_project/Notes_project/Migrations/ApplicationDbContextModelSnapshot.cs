@@ -45,7 +45,15 @@ namespace Notes_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Notes");
                 });
@@ -198,6 +206,17 @@ namespace Notes_project.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("Notes_project.Models.Notes", b =>
+                {
+                    b.HasOne("Notes_project.Models.User", "User")
+                        .WithMany("Notes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Notes_project.Models.RolePermission", b =>
                 {
                     b.HasOne("Notes_project.Models.Permission", null)
@@ -226,6 +245,11 @@ namespace Notes_project.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Notes_project.Models.User", b =>
+                {
+                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }

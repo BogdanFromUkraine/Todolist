@@ -119,10 +119,10 @@ namespace Notes_project
 
             app.UseCors("reactProject");
 
-            app.MapGet("get", () =>
+            app.MapPost("get", () =>
             {
                 return Results.Ok("fjdlk");
-            }).RequireAuthorization().RequirePermissions(Enum.Permission.Create);
+            }).RequireAuthorization().RequirePermissions(Enum.Permission.Read);
 
             app.Run();
         }

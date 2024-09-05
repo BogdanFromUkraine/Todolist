@@ -21,7 +21,7 @@
         public string Email { get; set; }
 
         public ICollection<Role> Roles { get; set; } = [];
-
+        public ICollection<Notes> Notes { get; set; } = [];
 
         public static User Create(Guid id, string userName, string passwordHash, string email) 
         {

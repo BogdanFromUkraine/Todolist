@@ -12,7 +12,7 @@ using Notes_project.DataAccess;
 namespace Notes_project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240828120614_Initial")]
+    [Migration("20240904193720_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -134,6 +134,33 @@ namespace Notes_project.Migrations
                     b.HasIndex("PermissionId");
 
                     b.ToTable("RolePermission");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 1
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 2
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 3
+                        },
+                        new
+                        {
+                            RoleId = 1,
+                            PermissionId = 4
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            PermissionId = 1
+                        });
                 });
 
             modelBuilder.Entity("Notes_project.Models.User", b =>

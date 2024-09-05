@@ -24,7 +24,9 @@ namespace Notes_project.DataAccess
 
         protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //цей код автоматично застосовує всі конфігурації
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
             modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));  
         }
     }

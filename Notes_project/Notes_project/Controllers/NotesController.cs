@@ -13,17 +13,25 @@ namespace Notes_project.Controllers
     {
         private readonly INotesRepository _notesRepository;
         private readonly IUserService _userService;
-        public NotesController(INotesRepository notesRepository, IUserService userService)
+        private readonly IUserRepository _userRepository;
+        public NotesController(INotesRepository notesRepository,
+            IUserService userService,
+            IUserRepository userRepository)
         {
             _notesRepository = notesRepository;
             _userService = userService;
+            _userRepository = userRepository;
         }
 
         [HttpGet("ReciveNote")]
         [Authorize]
         public IActionResult ReciveNote([FromQuery] int Id) 
         {
-            var note = _notesRepository.Get(u => u.Id == Id);
+            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
+
+            var note = _userRepository.GetUserNotes(userId, Id).GetAwaiter().GetResult();
+
             return Ok(note);
         }
 
@@ -31,17 +39,35 @@ namespace Notes_project.Controllers
         [Authorize]
         public IActionResult GetAllNotes() 
         {
-            var allNotes = _notesRepository.GetAll();
-            return Ok(allNotes);
+            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) {}
+
+            var notes = _userRepository.GetAllUserNotes(userId).GetAwaiter().GetResult();
+
+            return Ok(notes);
         }
 
         [HttpPost("Create")]
-        
-        [Authorize]
-        public async Task<IActionResult> Create([FromBody] Notes note) 
+           
+        public async Task<IActionResult> Create([FromBody] NotesDTO note) 
         {
-           await _notesRepository.Add(note);
-           await _notesRepository.Save();
+
+            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) {}
+
+            var user = _userRepository.Get(u => u.Id == userId);
+            var notes = new Notes()
+            {
+                Id = note.Id,
+                Title = note.Title,
+                Description = note.Description,
+                IsCompleted = note.IsCompleted,
+                PhotoCode = note.PhotoCode,
+            };
+
+            user.Notes.Add(notes);
+
+            await _userRepository.Save();
 
             return Ok("Ви успішно створили замітку");
         }
@@ -50,11 +76,11 @@ namespace Notes_project.Controllers
         [Authorize]
         public async Task<IActionResult> Delete([FromQuery] int Id) 
         {
-            Notes note =  _notesRepository.Get(u => u.Id == Id);
+            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
 
-            _notesRepository.Remove(note);
-            _notesRepository.Save();
-
+            _userRepository.RemoveUserNote(userId, Id).GetAwaiter().GetResult();
+            _userRepository.Save();
 
             return Ok("Видалення пройло успішно");
         }
@@ -63,13 +89,17 @@ namespace Notes_project.Controllers
         [Authorize]
         public IActionResult UpdateNote([FromBody] int Id) 
         {
-            Notes note = _notesRepository.Get(u => u.Id == Id);
-            note.IsCompleted = note.IsCompleted ? false : true;  
+            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
+
+            _userRepository.UpdateUserNote(userId, Id);
+            //Notes note = _notesRepository.Get(u => u.Id == Id);
+            //note.IsCompleted = note.IsCompleted ? false : true;
 
 
 
-            _notesRepository.Update(note);
-            _notesRepository.Save();
+            // _notesRepository.Update(note);
+            _userRepository.Save();
 
             return Ok();
         }
