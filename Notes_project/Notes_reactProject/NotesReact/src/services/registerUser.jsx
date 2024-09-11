@@ -4,7 +4,7 @@ import axios  from "axios";
 export default async function RegisterUser(userName, email, password) 
 {
     try {
-        const response = await axios.post(data.localhost + "Notes/Register", {
+        const response = await axios.post(data.localhost + "User/Register", {
           UserName : userName,
           Email : email,
           Password : password,

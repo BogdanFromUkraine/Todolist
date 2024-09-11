@@ -4,7 +4,7 @@ import axios from "axios";
 export default async function LoginUser(email, password) 
 {
     try {
-        const response = await axios.post(data.localhost + "Notes/Login", {
+        const response = await axios.post(data.localhost + "User/Login", {
           Email : email,
           Password : password,
         });

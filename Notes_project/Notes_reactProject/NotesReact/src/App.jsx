@@ -6,7 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import MainPage from './MainPage';
 import Group from './Group';
 import People from './People';
-import User from './User';
+import {User} from './User';
 import Root from './Root';
 import AuthorizationPage from './AuthorizationPage';
 

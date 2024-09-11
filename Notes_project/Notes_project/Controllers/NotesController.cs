@@ -12,14 +12,12 @@ namespace Notes_project.Controllers
     public class NotesController : ControllerBase
     {
         private readonly INotesRepository _notesRepository;
-        private readonly IUserService _userService;
+        
         private readonly IUserRepository _userRepository;
         public NotesController(INotesRepository notesRepository,
-            IUserService userService,
             IUserRepository userRepository)
         {
             _notesRepository = notesRepository;
-            _userService = userService;
             _userRepository = userRepository;
         }
 
@@ -104,18 +102,6 @@ namespace Notes_project.Controllers
             return Ok();
         }
 
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] UserLoginDTO user)
-        {
-            var JwtToken = _userService.Login(user.Email, user.Password);
-            return Ok(JwtToken);
-        }
-
-        [HttpPost("Register")]
-        public IActionResult Register([FromBody] UserDTO user)
-        {
-            var JwtToken = _userService.Register(user.UserName, user.Email, user.Password);
-            return Ok(JwtToken);
-        }
+        
     }
 }

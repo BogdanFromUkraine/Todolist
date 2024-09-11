@@ -5,6 +5,8 @@ import RemoveNote from "../src/services/removeNote";
 import UpdateNote from "../src/services/updateNote";
 import RegisterUser from "../src/services/registerUser";
 import LoginUser from "../src/services/loginUser";
+import GetUserData from "../src/services/getUserData";
+import UploadUserPhoto from "../src/services/uploadUserPhoto";
 
 class DataStore 
 {
@@ -79,6 +81,25 @@ class DataStore
         {
             try {
                 const response = await LoginUser(email, password);
+            } catch (error) {
+                
+            }
+        }
+
+    get_User_Data = async () => 
+        {
+            try {
+                const response = await GetUserData();
+                this.user = response;
+            } catch (error) {
+                
+            }
+        }
+    upload_User_Photo = async (userPhoto) => 
+        {
+            try {
+                await UploadUserPhoto(userPhoto);
+                this.get_User_Data();
             } catch (error) {
                 
             }

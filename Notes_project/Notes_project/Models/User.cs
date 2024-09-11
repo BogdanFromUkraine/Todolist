@@ -19,6 +19,7 @@
         public string UserName { get; set; }
         public string PasswordHash { get; set; }
         public string Email { get; set; }
+        public string? UserPhoto { get; set; } = string.Empty;
 
         public ICollection<Role> Roles { get; set; } = [];
         public ICollection<Notes> Notes { get; set; } = [];
