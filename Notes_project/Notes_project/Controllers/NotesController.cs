@@ -48,7 +48,7 @@ namespace Notes_project.Controllers
         }
 
         [HttpPost("Create")]
-           
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] NotesDTO note) 
         {
 
@@ -72,9 +72,9 @@ namespace Notes_project.Controllers
             return Ok("Ви успішно створили замітку");
         }
         
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> Delete([FromQuery] int Id) 
+        public async Task<IActionResult> Delete(int Id) 
         {
             var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
@@ -87,12 +87,12 @@ namespace Notes_project.Controllers
 
         [HttpPut]
         [Authorize]
-        public IActionResult UpdateNote([FromBody] int Id) 
+        public async Task<IActionResult> UpdateNote([FromBody] int Id) 
         {
             var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
 
-            _userRepository.UpdateUserNote(userId, Id);
+            await _userRepository.UpdateUserNote(userId, Id);
             //Notes note = _notesRepository.Get(u => u.Id == Id);
             //note.IsCompleted = note.IsCompleted ? false : true;
 
@@ -105,16 +105,16 @@ namespace Notes_project.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(string userName, string email, string password)
+        public IActionResult Login([FromBody] UserLoginDTO user)
         {
-            var JwtToken = _userService.Login(email, password);
+            var JwtToken = _userService.Login(user.Email, user.Password);
             return Ok(JwtToken);
         }
 
         [HttpPost("Register")]
-        public IActionResult Register(string userName, string email, string password)
+        public IActionResult Register([FromBody] UserDTO user)
         {
-            var JwtToken = _userService.Register(userName, email, password);
+            var JwtToken = _userService.Register(user.UserName, user.Email, user.Password);
             return Ok(JwtToken);
         }
     }

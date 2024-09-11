@@ -5,11 +5,13 @@ export default async function UpdateNote(id)
 {
    
    try {
+      const jwtToken = await localStorage.getItem('token');
       const response = await axios.put( data.localhost + "Notes", id, 
       {
          headers: 
          {
-             "Content-Type": "application/json"
+            'Authorization': `Bearer ${jwtToken}`,// Додаємо токен у заголовок
+            'Content-Type': 'application/json'
          }
      })
       return response;

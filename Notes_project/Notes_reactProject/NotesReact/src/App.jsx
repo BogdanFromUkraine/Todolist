@@ -8,6 +8,7 @@ import Group from './Group';
 import People from './People';
 import User from './User';
 import Root from './Root';
+import AuthorizationPage from './AuthorizationPage';
 
 export const App = observer(()=>
   {
@@ -48,6 +49,11 @@ export const App = observer(()=>
             element: <User/>,
            errorElement: <div>404 Not Found</div>,
           },
+          {
+            path: "Authorize",
+            element: <AuthorizationPage/>,
+            errorElement: <div>404 Not Found</div>,
+          }
         ]
       },
 

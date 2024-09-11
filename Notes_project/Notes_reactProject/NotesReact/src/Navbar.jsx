@@ -11,6 +11,7 @@ export default function Navbar()
         <li><Link to="/People">People</Link></li>
         <li><Link to="#">Create Group</Link></li>
         <li><Link to="/Group">Group</Link></li>
+        <li><Link to="/Authorize">Authorize</Link></li>
         <li><Link to="/User">User</Link></li>
     </ul>
 </nav>

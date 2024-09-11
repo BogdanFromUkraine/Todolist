@@ -101,15 +101,25 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
 
         public async Task UpdateUserNote(Guid userId, int noteId) 
         {
-            var user = await _db.User
-              .Include(u => u.Notes)
-              .FirstOrDefaultAsync(n => n.Id == userId);
+            try
+            {
+                var user = await _db.User
+             .Include(u => u.Notes)
+             .FirstOrDefaultAsync(n => n.Id == userId);
 
-            var note = user.Notes.FirstOrDefault(n => n.Id == noteId);
+                var note = user.Notes.FirstOrDefault(n => n.Id == noteId);
 
-            note.IsCompleted = note.IsCompleted ? false : true;
+                note.IsCompleted = note.IsCompleted ? false : true;
 
-            _db.Update(note);
+                _db.Update(note);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
 
         }
 

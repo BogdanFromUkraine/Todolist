@@ -6,10 +6,17 @@ export default async function RemoveNote(id)
    const Id = id;
    
    try {
-      const response = await axios.delete( data.localhost + "Notes", 
+      const jwtToken = localStorage.getItem('token');
+      const response = await axios.delete( data.localhost + `Notes/${Id}`,
       {
-         params: {Id}
-      })
+         headers: 
+         {
+            'Content-Type': 'application/json',
+             'Authorization': `Bearer ${jwtToken}`, // Додаємо токен у заголовок
+             
+         }
+     }
+   )
       return response;
    } catch (error) {
       console.log(error);

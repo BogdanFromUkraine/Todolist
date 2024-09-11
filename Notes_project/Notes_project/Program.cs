@@ -13,6 +13,7 @@ using Notes_project.services.Authentication;
 using Notes_project.Services;
 using ProjectTrackingSpotify.DataAccess.Repository;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -69,9 +70,10 @@ namespace Notes_project
 
                     options.Events = new JwtBearerEvents
                     {
-                        OnMessageReceived = contex =>
+                        OnMessageReceived = context =>
                         {
-                            contex.Token = contex.Request.Cookies["2"];
+                            context.Token = context.Request.Cookies["2"];
+                          //  context.Token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
                             return Task.CompletedTask;
                         },
                         OnAuthenticationFailed = context =>

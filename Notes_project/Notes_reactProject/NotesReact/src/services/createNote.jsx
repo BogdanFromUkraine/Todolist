@@ -5,6 +5,8 @@ export default async function CreateNote(title, description, photoCode)
 {
    
    try {
+      const jwtToken = localStorage.getItem("token");
+
       const response = await axios.post(data.localhost + "Notes/Create",
       {
          Title: title,
@@ -14,7 +16,8 @@ export default async function CreateNote(title, description, photoCode)
       {
          headers: 
          {
-             "Content-Type": "application/json"
+             "Content-Type": "application/json",
+             'Authorization': `Bearer ${jwtToken}` // Додаємо токен у заголовок
          }
      })
       return response;

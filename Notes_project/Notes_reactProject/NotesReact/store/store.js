@@ -3,6 +3,8 @@ import CreateNote from "../src/services/createNote"
 import GetAllNotes from "../src/services/getAllNotes";
 import RemoveNote from "../src/services/removeNote";
 import UpdateNote from "../src/services/updateNote";
+import RegisterUser from "../src/services/registerUser";
+import LoginUser from "../src/services/loginUser";
 
 class DataStore 
 {
@@ -13,6 +15,7 @@ class DataStore
 
     notess = [];
     isNoteChanged = false;
+    user = {};
 
 
     create_Note = async (title, description, photoCode) => 
@@ -40,11 +43,6 @@ class DataStore
            
         };
 
-    // get_Note = async () => 
-    //     {
-
-    //     };
-    
     remove_Note = async (id) => 
         {
             try {
@@ -68,7 +66,23 @@ class DataStore
             
         };
 
-
+    register_User = async (userName, email, password) => 
+        {
+            try {
+                const response = await RegisterUser(userName, email, password);
+                this.user = response;
+            } catch (error) {
+                
+            }
+        }
+    login_User = async (email, password) => 
+        {
+            try {
+                const response = await LoginUser(email, password);
+            } catch (error) {
+                
+            }
+        }
 }
 
 export default DataStore;

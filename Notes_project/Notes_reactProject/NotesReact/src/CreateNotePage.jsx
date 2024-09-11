@@ -46,8 +46,6 @@ const pVariants = {
             opacity: 1
         }
 };
-
-
     return <>
     <motion.div 
     variants={pVariants}
