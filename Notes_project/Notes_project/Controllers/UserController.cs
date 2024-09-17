@@ -61,5 +61,14 @@ namespace Notes_project.Controllers
             return Ok();
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetAllUser() 
+        {
+            var users = _userRepository.GetAll();
+
+            return Ok(users);
+        }
+
     }
 }

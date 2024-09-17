@@ -7,6 +7,7 @@ import RegisterUser from "../src/services/registerUser";
 import LoginUser from "../src/services/loginUser";
 import GetUserData from "../src/services/getUserData";
 import UploadUserPhoto from "../src/services/uploadUserPhoto";
+import GetAllUsers from "../src/services/getAllUsers";
 
 class DataStore 
 {
@@ -18,6 +19,7 @@ class DataStore
     notess = [];
     isNoteChanged = false;
     user = {};
+    users = [];
 
 
     create_Note = async (title, description, photoCode) => 
@@ -44,6 +46,16 @@ class DataStore
             
            
         };
+
+    get_AllUsers = async () => 
+        {
+            try {
+                const response = await GetAllUsers();
+                this.users = response
+            } catch (error) {
+                
+            }
+        }
 
     remove_Note = async (id) => 
         {
