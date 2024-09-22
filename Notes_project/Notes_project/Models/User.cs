@@ -24,6 +24,8 @@
         public ICollection<Role> Roles { get; set; } = [];
         public ICollection<Notes> Notes { get; set; } = [];
 
+        public ICollection<Group> Groups { get; set; } = [];
+
         public static User Create(Guid id, string userName, string passwordHash, string email) 
         {
             return new User(id, userName, passwordHash, email);

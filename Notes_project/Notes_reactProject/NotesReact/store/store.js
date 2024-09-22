@@ -8,6 +8,11 @@ import LoginUser from "../src/services/loginUser";
 import GetUserData from "../src/services/getUserData";
 import UploadUserPhoto from "../src/services/uploadUserPhoto";
 import GetAllUsers from "../src/services/getAllUsers";
+import GetAllGroups from "../src/services/getAllGroups";
+import GetNotesFromGroup from "../src/services/getNotesFromGroup";
+import AddNotesToGroup from "../src/services/addNotesToGroup";
+import RemoveNoteFromGroup from "../src/services/removeNoteFromGroup";
+import UpdateNoteFromGroup from "../src/services/updateNoteFromGroup";
 
 class DataStore 
 {
@@ -20,6 +25,9 @@ class DataStore
     isNoteChanged = false;
     user = {};
     users = [];
+    groups = [];
+    notesOfGroup = [];
+    isCreated = "";
 
 
     create_Note = async (title, description, photoCode) => 
@@ -115,6 +123,43 @@ class DataStore
             } catch (error) {
                 
             }
+        }
+    get_All_Group = async () => 
+        {
+            try {
+                const response =  await GetAllGroups();
+                this.groups = response;
+            } catch (error) {
+                
+            }
+        }
+    get_Notes_From_Group = async (groupId) => 
+        {
+            try {
+                const response = await GetNotesFromGroup(groupId);
+                this.notesOfGroup = response;
+            } catch (error) {
+                
+            }
+        }
+    add_Notes_To_Group = async (title, description, photoCode, groupId) => 
+        {
+            try {
+                const response = await AddNotesToGroup(title, description, photoCode, groupId);
+                this.get_Notes_From_Group(groupId);
+            } catch (error) {
+                
+            }
+        }
+    remove_Note_From_Group = async (groupId, noteId) => 
+        {
+            await RemoveNoteFromGroup(groupId, noteId);
+            this.get_Notes_From_Group(groupId);
+        }
+    update_Note_From_Group = async (groupId, noteId) => 
+        {
+            await UpdateNoteFromGroup(groupId, noteId);
+            this.get_Notes_From_Group(groupId);
         }
 }
 

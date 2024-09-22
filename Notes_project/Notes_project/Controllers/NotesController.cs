@@ -49,25 +49,34 @@ namespace Notes_project.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] NotesDTO note) 
         {
-
-            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
-            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) {}
-
-            var user = _userRepository.Get(u => u.Id == userId);
-            var notes = new Notes()
+            try
             {
-                Id = note.Id,
-                Title = note.Title,
-                Description = note.Description,
-                IsCompleted = note.IsCompleted,
-                PhotoCode = note.PhotoCode,
-            };
+                var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+                if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
 
-            user.Notes.Add(notes);
+                var user = _userRepository.Get(u => u.Id == userId);
+                var notes = new Notes()
+                {
+                    Id = note.Id,
+                    Title = note.Title,
+                    Description = note.Description,
+                    IsCompleted = note.IsCompleted,
+                    PhotoCode = note.PhotoCode,
+                };
 
-            await _userRepository.Save();
+                user.Notes.Add(notes);
 
-            return Ok("Ви успішно створили замітку");
+                await _userRepository.Save();
+
+                return Ok("Ви успішно створили замітку");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+           
         }
         
         [HttpDelete("{id}")]

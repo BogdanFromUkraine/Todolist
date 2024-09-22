@@ -95,6 +95,7 @@ namespace Notes_project
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPermissionService, PermissionService>();
             builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+            builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

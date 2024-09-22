@@ -1,8 +1,36 @@
-import SideBar from "./SideBar";
+import {SideBar} from "./SideBar";
+import { useStores } from "../store/root-store-context"
+import { useEffect, useState } from "react";
+import styles from "./styles/group.module.css"
+import { Card } from "@chakra-ui/react";
+import { Cards } from "./Cards";
+import { observer } from "mobx-react-lite";
+import { CreateNotePage } from "./CreateNotePage";
+import { CreateNotePageGroup } from "./CreateNotePageGroup";
+import { CardsGroup } from "./CardsGroup";
 
-export default function Group() 
+export const Group = observer(() => 
 {
-    return <div>
-        <SideBar/>
+    const [groupId, setGroupId] = useState();
+
+    const {get_All_Group, notesOfGroup, add_Notes_To_Group} = useStores();
+
+    useEffect(() => 
+        {
+            async function getAllGroups() 
+            {
+                await get_All_Group();
+            }
+            getAllGroups();
+        }, [])
+
+    return <div className={styles.main}>
+        <SideBar setGroupId={setGroupId}/>
+        <div>
+            <CardsGroup notes={notesOfGroup} groupId={groupId}/>
+        </div>
+        <div>
+            <CreateNotePageGroup groupId={groupId} />
+        </div>
     </div>
-}
+})

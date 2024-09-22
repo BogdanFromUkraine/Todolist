@@ -22,6 +22,42 @@ namespace Notes_project.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("GroupUser", b =>
+                {
+                    b.Property<int>("GroupsGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("GroupsGroupId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("GroupUser");
+                });
+
+            modelBuilder.Entity("Notes_project.Models.Group", b =>
+                {
+                    b.Property<int>("GroupId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GroupId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("GroupId");
+
+                    b.ToTable("Group");
+                });
+
             modelBuilder.Entity("Notes_project.Models.Notes", b =>
                 {
                     b.Property<int>("Id")
@@ -34,6 +70,9 @@ namespace Notes_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("bit");
 
@@ -45,13 +84,15 @@ namespace Notes_project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("UsersId")
+                    b.Property<int?>("UsersId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
 
                     b.HasIndex("UserId");
 
@@ -209,13 +250,32 @@ namespace Notes_project.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("Notes_project.Models.Notes", b =>
+            modelBuilder.Entity("GroupUser", b =>
                 {
-                    b.HasOne("Notes_project.Models.User", "User")
-                        .WithMany("Notes")
-                        .HasForeignKey("UserId")
+                    b.HasOne("Notes_project.Models.Group", null)
+                        .WithMany()
+                        .HasForeignKey("GroupsGroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Notes_project.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Notes_project.Models.Notes", b =>
+                {
+                    b.HasOne("Notes_project.Models.Group", "Group")
+                        .WithMany("Notes")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("Notes_project.Models.User", "User")
+                        .WithMany("Notes")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Group");
 
                     b.Navigation("User");
                 });
@@ -248,6 +308,11 @@ namespace Notes_project.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Notes_project.Models.Group", b =>
+                {
+                    b.Navigation("Notes");
                 });
 
             modelBuilder.Entity("Notes_project.Models.User", b =>

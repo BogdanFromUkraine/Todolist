@@ -21,6 +21,7 @@ namespace Notes_project.DataAccess
         public DbSet<Models.Role> Roles { get; set; }
         public DbSet<RolePermission> RolePermission { get; set; }
         public DbSet<UserRoles> UserRoles { get; set; }
+        public DbSet<Group> Group { get; set; }
 
         protected override async void OnModelCreating(ModelBuilder modelBuilder)
         {

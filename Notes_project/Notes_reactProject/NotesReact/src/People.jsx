@@ -2,8 +2,9 @@ import { useEffect } from "react"
 import GetAllUsers from "./services/getAllUsers";
 import { useStores } from '../store/root-store-context';
 import styles from '../src/styles/people.module.css'
+import { observer } from "mobx-react-lite";
 
-export default function People() 
+export const People = observer(() => 
 {
     const {get_AllUsers, users, user} = useStores();
     useEffect(() => 
@@ -35,4 +36,4 @@ export default function People()
                     }
                 </div>
           </div>
-}
+})
