@@ -3,7 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Notes_project.Models;
 using ProjectTrackingSpotify.DataAccess.Repository;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
+using System.IO.Compression;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Notes_project.Controllers
 {
@@ -28,15 +32,12 @@ namespace Notes_project.Controllers
             return Ok();
         }
 
-        [HttpPost("AddUserToGroup")]
-        public async Task<IActionResult> AddUserToGroup(int groupId)
+        [HttpPost("AddUserToGroup/{groupId}/{userId}")]
+        public async Task<IActionResult> AddUserToGroup(int groupId, string userId )
         {
-            var userIdClaim = User.FindFirst("userId");
-            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
+            var userIdGuid = Guid.Parse(userId);
 
-            // АЛЕ ЮСЕРА ТРЕБА ВИБИРАТИ, А НЕ ВСТАВЛЯТИ АВТОМАТИЧНО КОРИСТУВАЧА
-
-            var user = _userRepository.Get(u => u.Id == userId);
+            var user = _userRepository.Get(u => u.Id == userIdGuid);
 
             await _groupRepository.AddUserToGroup(groupId, user);
             await _userRepository.Save();
@@ -84,6 +85,14 @@ namespace Notes_project.Controllers
         {
             var allGroup = _groupRepository.GetAll();
             return Ok(allGroup);
+        }
+
+        [HttpGet("GetGroupData/{groupId}")]
+        public async Task<IActionResult> GetGroupData(int groupId) 
+        {
+            var groupData = await _groupRepository.GetGroupData(groupId);
+           
+            return Ok(groupData);   
         }
     }
 }

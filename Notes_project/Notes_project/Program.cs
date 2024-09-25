@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Notes_project.DataAccess;
@@ -14,6 +15,7 @@ using Notes_project.Services;
 using ProjectTrackingSpotify.DataAccess.Repository;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 using System;
+using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -97,6 +99,23 @@ namespace Notes_project
             builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
             builder.Services.AddScoped<IGroupRepository, GroupRepository>();
 
+            //добавл€ю сервер, €кий буде стискати файли, €к≥ € буду передавати
+            builder.Services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.Providers.Add<GzipCompressionProvider>();
+                options.Providers.Add<BrotliCompressionProvider>();
+
+            });
+            builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.SmallestSize;
+            });
+            builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -111,10 +130,12 @@ namespace Notes_project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
             app.UseHttpsRedirection();
 
+            app.UseResponseCompression();
             app.MapControllers();
+
+            
 
             app.UseAuthentication();
 

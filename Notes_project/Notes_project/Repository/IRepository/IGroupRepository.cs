@@ -16,5 +16,6 @@ namespace ProjectTrackingSpotify.DataAccess.Repository.IRepository
         Task<ICollection<Notes>> GetNotesFromGroup(int groupId);
         Task DeleteNoteFromGroup(int groupId, int noteId);
         Task UpdateNoteFromGroup(int groupId, int noteId);
+        Task<object> GetGroupData(int groupId); 
     }
 }

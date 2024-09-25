@@ -13,6 +13,8 @@ import GetNotesFromGroup from "../src/services/getNotesFromGroup";
 import AddNotesToGroup from "../src/services/addNotesToGroup";
 import RemoveNoteFromGroup from "../src/services/removeNoteFromGroup";
 import UpdateNoteFromGroup from "../src/services/updateNoteFromGroup";
+import AddUserToGroupFunction from "../src/services/addUserToGroup";
+import GetGroupData from "../src/services/getGroupData";
 
 class DataStore 
 {
@@ -28,6 +30,7 @@ class DataStore
     groups = [];
     notesOfGroup = [];
     isCreated = "";
+    groupData = {};
 
 
     create_Note = async (title, description, photoCode) => 
@@ -160,6 +163,15 @@ class DataStore
         {
             await UpdateNoteFromGroup(groupId, noteId);
             this.get_Notes_From_Group(groupId);
+        }
+    add_User_To_Group = async (groupId, userId) => 
+        {
+            await AddUserToGroupFunction(groupId, userId);
+        }
+    get_Group_Data = async (groupId) => 
+        {
+            const response = await GetGroupData(groupId);
+            this.groupData = response;
         }
 }
 

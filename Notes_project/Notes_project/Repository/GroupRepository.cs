@@ -96,7 +96,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             }
 
         }
-        public async Task DeleteNoteFromGroup(int groupId, [FromBody] int noteId)
+        public async Task DeleteNoteFromGroup(int groupId, int noteId)
         {
             try
             {
@@ -133,5 +133,25 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             }
            
         }
+        public async Task<object> GetGroupData(int groupId) 
+        {
+            var group = await _db.Group.Include(g => g.Users).Include(g => g.Notes).FirstOrDefaultAsync(g => g.GroupId == groupId);
+
+            int numberOfUsers = group.Users.Count();
+            int numberOfNotes = group.Notes.Count();
+
+            var users = new List<string>();
+            users = group.Users.Select(u => u.UserName).ToList();
+
+            var groupData = new {
+                numberOfUsers, 
+                numberOfNotes, 
+                users
+            };
+
+            return groupData;
+        }
+
+      
     }   
 }

@@ -8,12 +8,13 @@ import { observer } from "mobx-react-lite";
 import { CreateNotePage } from "./CreateNotePage";
 import { CreateNotePageGroup } from "./CreateNotePageGroup";
 import { CardsGroup } from "./CardsGroup";
+import { AddPeopleToGroup } from "./AddPeopleToGroup";
 
 export const Group = observer(() => 
 {
     const [groupId, setGroupId] = useState();
 
-    const {get_All_Group, notesOfGroup, add_Notes_To_Group} = useStores();
+    const {get_All_Group, notesOfGroup, groupData} = useStores();
 
     useEffect(() => 
         {
@@ -24,7 +25,9 @@ export const Group = observer(() =>
             getAllGroups();
         }, [])
 
-    return <div className={styles.main}>
+    return <>
+      <AddPeopleToGroup groupId={groupId}/>
+      <div className={styles.main}>
         <SideBar setGroupId={setGroupId}/>
         <div>
             <CardsGroup notes={notesOfGroup} groupId={groupId}/>
@@ -33,4 +36,5 @@ export const Group = observer(() =>
             <CreateNotePageGroup groupId={groupId} />
         </div>
     </div>
+    </>
 })
