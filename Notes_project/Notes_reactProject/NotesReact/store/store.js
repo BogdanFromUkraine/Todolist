@@ -15,6 +15,7 @@ import RemoveNoteFromGroup from "../src/services/removeNoteFromGroup";
 import UpdateNoteFromGroup from "../src/services/updateNoteFromGroup";
 import AddUserToGroupFunction from "../src/services/addUserToGroup";
 import GetGroupData from "../src/services/getGroupData";
+import RemoveUserFromGroup from "../src/services/removeUserFromGroup";
 
 class DataStore 
 {
@@ -172,6 +173,11 @@ class DataStore
         {
             const response = await GetGroupData(groupId);
             this.groupData = response;
+        }
+    remove_User_From_Group = async (groupId, userId) => 
+        {
+            await RemoveUserFromGroup(groupId, userId);
+            this.get_Group_Data(groupId);
         }
 }
 

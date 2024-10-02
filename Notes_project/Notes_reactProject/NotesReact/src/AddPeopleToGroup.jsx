@@ -4,14 +4,16 @@ import { useEffect } from "react";
 
 export const AddPeopleToGroup = observer(({groupId}) => 
     {
-        const {get_AllUsers, users, add_User_To_Group, get_Group_Data, groupData} = useStores();
+        const {get_AllUsers, users, add_User_To_Group, get_Group_Data, groupData, remove_User_From_Group} = useStores();
 
         useEffect(()=>
             {
                  const getUsers = async () => 
                     {
                         await get_AllUsers();
-                        await get_Group_Data(groupId);    
+                        groupId != null ?
+                        await get_Group_Data(groupId)
+                        : console.log("Choose group");    
                     }
                     getUsers();
 
@@ -21,7 +23,19 @@ export const AddPeopleToGroup = observer(({groupId}) =>
         {
             const select = document.getElementById('user-select');
             const selectedValue = select.value;
-            await add_User_To_Group(groupId, selectedValue);
+            return selectedValue;
+            
+        }
+        async function addUser() 
+        {
+            const res = await selectUser();
+            await add_User_To_Group(groupId, res);
+        }
+
+        async function deleteUser() 
+        {
+            const res = await selectUser();
+            await remove_User_From_Group(groupId, res)
         }
 
         return <div>
@@ -31,20 +45,9 @@ export const AddPeopleToGroup = observer(({groupId}) =>
                         return <option value={i.id}>{i.userName}</option>
                     })}
             </select>
-    <button>Add User to Group</button>
-    {/* <div>
-        <select id="users-group">
-                    {
-                        groupData.users.map(i => 
-                            {
-                                return <option>{i.userName}</option>
-                            })
-
-                    }
-        </select>            
-        {console.log(groupData)}
-    </div> */}
-    <div>
+    <button onClick={addUser}>Add User to Group</button>
+    <button onClick={deleteUser}>Delete User from Group</button>
+    {groupData.users != null ?  <div>
         Number of Notes: {groupData.numberOfNotes}
         Users of Group:
         <select id="users-group">
@@ -57,6 +60,7 @@ export const AddPeopleToGroup = observer(({groupId}) =>
                     }
         </select>       
         
-      </div>
+      </div> : <div>Помилка</div> }
+   
         </div>
     })

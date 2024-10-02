@@ -67,7 +67,7 @@ const pVariants = {
     type="file"
     onChange={e => uploadPhoto(e)}/>
 
-    <img src={photoCode} />
+    <img style={{ width: '330px', height: '200px' }} src={photoCode} />
     
     <motion.button
      whileHover={{

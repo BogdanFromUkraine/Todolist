@@ -151,7 +151,24 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
 
             return groupData;
         }
+        public async Task DeleteUserFromGroup(int groupId, Guid userId) 
+        {
+            try
+            {
+                var group = await _db.Group.Include(g => g.Users).FirstOrDefaultAsync(g => g.GroupId == groupId);
 
+                var deletedUser = group.Users.FirstOrDefault(u => u.Id == userId);
+
+                group.Users.Remove(deletedUser);
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
       
     }   
 }

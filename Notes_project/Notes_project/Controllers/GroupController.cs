@@ -33,7 +33,7 @@ namespace Notes_project.Controllers
         }
 
         [HttpPost("AddUserToGroup/{groupId}/{userId}")]
-        public async Task<IActionResult> AddUserToGroup(int groupId, string userId )
+        public async Task<IActionResult> AddUserToGroup(int groupId, string userId)
         {
             var userIdGuid = Guid.Parse(userId);
 
@@ -68,31 +68,39 @@ namespace Notes_project.Controllers
         }
 
         [HttpDelete("DeleteNoteFromGroup/{groupId}/{noteId}")]
-        public async Task<IActionResult> DeleteNoteFromGroup(int groupId,int noteId) 
+        public async Task<IActionResult> DeleteNoteFromGroup(int groupId, int noteId)
         {
             await _groupRepository.DeleteNoteFromGroup(groupId, noteId);
             return Ok();
         }
         [HttpPut("UpdateNoteFromGroup/{groupId}/{noteId}")]
-        public async Task<IActionResult> UpdateNoteFromGroup(int groupId, int noteId) 
+        public async Task<IActionResult> UpdateNoteFromGroup(int groupId, int noteId)
         {
             await _groupRepository.UpdateNoteFromGroup(groupId, noteId);
             return Ok();
         }
 
         [HttpGet("GetAllGroup")]
-        public async Task<IActionResult> GetAllGroup() 
+        public async Task<IActionResult> GetAllGroup()
         {
             var allGroup = _groupRepository.GetAll();
             return Ok(allGroup);
         }
 
         [HttpGet("GetGroupData/{groupId}")]
-        public async Task<IActionResult> GetGroupData(int groupId) 
+        public async Task<IActionResult> GetGroupData(int groupId)
         {
             var groupData = await _groupRepository.GetGroupData(groupId);
-           
-            return Ok(groupData);   
+
+            return Ok(groupData);
+        }
+        [HttpDelete("DeleteUserFromGroup/{groupId}/{userId}")]
+        public async Task<IActionResult> DeleteUserFromGroup(int groupId, string userId)
+        {
+            var userIdGuid = Guid.Parse(userId);
+
+            await _groupRepository.DeleteUserFromGroup(groupId, userIdGuid);
+            return Ok();
         }
     }
 }

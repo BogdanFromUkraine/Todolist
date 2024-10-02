@@ -2,3 +2,8 @@
 {
     display: flex;
 }
+
+.cardsGroup{
+    display: flex;
+    flex-direction: column;
+}

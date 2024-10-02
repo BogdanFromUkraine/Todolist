@@ -26,7 +26,20 @@ export const Group = observer(() =>
         }, [])
 
     return <>
-      <AddPeopleToGroup groupId={groupId}/>
+     <div className={styles.main}>
+        <div>
+        <SideBar setGroupId={setGroupId} className={styles.sidebar} />
+        </div>
+        <div>
+        <CardsGroup notes={notesOfGroup} groupId={groupId} className={styles.cardsGroup} />
+        </div>
+        <div className={styles.information}>
+            <CreateNotePageGroup groupId={groupId} className={styles.createNote} />
+            <AddPeopleToGroup groupId={groupId} className={styles.addPeople} />
+        </div>
+        
+      </div>
+      {/* <AddPeopleToGroup groupId={groupId}/>
       <div className={styles.main}>
         <SideBar setGroupId={setGroupId}/>
         <div>
@@ -35,6 +48,6 @@ export const Group = observer(() =>
         <div>
             <CreateNotePageGroup groupId={groupId} />
         </div>
-    </div>
+    </div> */}
     </>
 })
