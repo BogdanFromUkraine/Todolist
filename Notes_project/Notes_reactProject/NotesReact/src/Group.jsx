@@ -14,7 +14,7 @@ export const Group = observer(() =>
 {
     const [groupId, setGroupId] = useState();
 
-    const {get_All_Group, notesOfGroup, groupData} = useStores();
+    const {get_All_Group, notesOfGroup, userRole} = useStores();
 
     useEffect(() => 
         {
@@ -23,7 +23,10 @@ export const Group = observer(() =>
                 await get_All_Group();
             }
             getAllGroups();
+            console.log(userRole);
         }, [])
+    
+
 
     return <>
      <div className={styles.main}>
@@ -34,20 +37,11 @@ export const Group = observer(() =>
         <CardsGroup notes={notesOfGroup} groupId={groupId} className={styles.cardsGroup} />
         </div>
         <div className={styles.information}>
-            <CreateNotePageGroup groupId={groupId} className={styles.createNote} />
+        <CreateNotePageGroup groupId={groupId} className={styles.createNote} />
+        {userRole === "Admin" ? 
             <AddPeopleToGroup groupId={groupId} className={styles.addPeople} />
-        </div>
-        
+         : <div></div> }
+         </div>
       </div>
-      {/* <AddPeopleToGroup groupId={groupId}/>
-      <div className={styles.main}>
-        <SideBar setGroupId={setGroupId}/>
-        <div>
-            <CardsGroup notes={notesOfGroup} groupId={groupId}/>
-        </div>
-        <div>
-            <CreateNotePageGroup groupId={groupId} />
-        </div>
-    </div> */}
     </>
 })

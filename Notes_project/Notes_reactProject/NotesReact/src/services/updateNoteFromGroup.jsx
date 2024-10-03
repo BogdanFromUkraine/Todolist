@@ -5,7 +5,7 @@ export default async function UpdateNoteFromGroup(groupId, noteId)
 {
    
    try {
-      const jwtToken = await localStorage.getItem('token');
+      const jwtToken =  localStorage.getItem('token');
       const response = await axios.put( data.localhost + `Group/UpdateNoteFromGroup/${groupId}/${noteId}`, 
       {
          headers: 

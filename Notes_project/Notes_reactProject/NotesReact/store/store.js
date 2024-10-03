@@ -16,6 +16,7 @@ import UpdateNoteFromGroup from "../src/services/updateNoteFromGroup";
 import AddUserToGroupFunction from "../src/services/addUserToGroup";
 import GetGroupData from "../src/services/getGroupData";
 import RemoveUserFromGroup from "../src/services/removeUserFromGroup";
+import getUserRole from "../src/services/getUserRole";
 
 class DataStore 
 {
@@ -32,7 +33,16 @@ class DataStore
     notesOfGroup = [];
     isCreated = "";
     groupData = {};
+    userRole = [];
 
+    get_User_Role = async () => 
+        {
+            try {
+               this.userRole = await getUserRole();
+            } catch (error) {
+                
+            }
+        }
 
     create_Note = async (title, description, photoCode) => 
         {

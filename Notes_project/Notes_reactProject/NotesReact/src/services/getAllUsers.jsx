@@ -5,7 +5,7 @@ export default async function GetAllUsers()
 {
    
    try {
-      const jwtToken = await localStorage.getItem('token');
+      const jwtToken =  localStorage.getItem('token');
       const response = await axios.get(data.localhost + "User", {
          headers: {
            'Authorization': `Bearer ${jwtToken}` // Додаємо токен у заголовок

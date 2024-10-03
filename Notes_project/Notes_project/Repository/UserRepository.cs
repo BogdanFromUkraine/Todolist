@@ -148,6 +148,35 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             }
             
         }
+        public async Task<UserDTOTest> GetUser(string email) 
+        {
+            try
+            {
+                var user = _db.User
+                .Include(u => u.Roles)
+                .FirstOrDefault(u => u.Email == email);
+
+                var userDto = new UserDTOTest
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    PasswordHash = user.PasswordHash,
+                    UserPhoto = user.UserPhoto,
+                    Roles = user.Roles.Select(r => r.Name).ToList() // Додаємо тільки назви ролей
+
+
+                };
+
+                return userDto;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+          
+        }
 
        
     }

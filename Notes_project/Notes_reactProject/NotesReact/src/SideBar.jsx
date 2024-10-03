@@ -4,12 +4,14 @@ import styles from "./styles/sideBar.module.css"
 
 export const SideBar = observer(({setGroupId}) => 
 {
-    const {groups, get_Notes_From_Group} = useStores();
+    const {groups, get_Notes_From_Group, user, groupData} = useStores();
 
     async function handleClick(id) 
     {
         await get_Notes_From_Group(id);
         setGroupId(id);
+        console.log(user.userName);
+        console.log(groupData.users);
     }
 
     return  <div className={styles.sidebar}>
@@ -18,6 +20,7 @@ export const SideBar = observer(({setGroupId}) =>
             groups.map(i => 
                 {
                     return <li>
+                        
                             <a onClick={() => handleClick(i.groupId)} key={i.id} href="#">{i.name}</a>
                     </li>
                     

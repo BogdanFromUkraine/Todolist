@@ -16,5 +16,6 @@ namespace ProjectTrackingSpotify.DataAccess.Repository.IRepository
         public Task RemoveUserNote(Guid userId, int noteId);
         public Task UpdateUserNote(Guid userId, int noteId);
         public Task AddTest(User user);
+        public Task<UserDTOTest> GetUser(string email);
     }
 }

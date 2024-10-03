@@ -4,6 +4,6 @@ namespace Notes_project.services.Authentication
 {
     public interface IJwtProvider
     {
-        string GenerateToken(User user);
+        string GenerateToken(UserDTOTest user);
     }
 }

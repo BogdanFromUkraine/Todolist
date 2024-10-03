@@ -1,12 +1,12 @@
 import axios from "axios"
 import data from "../dataJSON/data.json"
+import getUserRole from "./getUserRole";
 
 export default async function AddUserToGroupFunction(groupId, userId) 
 {
    
    try {
-      const jwtToken = localStorage.getItem("token");
-
+      const jwtToken = localStorage.getItem("token"); 
       const response = await axios.post(data.localhost + `Group/AddUserToGroup/${groupId}/${userId}`,
       {
          headers: 

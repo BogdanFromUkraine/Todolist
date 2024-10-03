@@ -5,7 +5,7 @@ export default async function GetAllNotes()
 {
    
    try {
-      const jwtToken = await localStorage.getItem('token');
+      const jwtToken =  localStorage.getItem('token');
       const response = await axios.get(data.localhost + "Notes/GetAllNotes", {
          headers: {
            'Authorization': `Bearer ${jwtToken}` // Додаємо токен у заголовок

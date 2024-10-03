@@ -5,7 +5,7 @@ export default async function UpdateNote(id)
 {
    
    try {
-      const jwtToken = await localStorage.getItem('token');
+      const jwtToken =  localStorage.getItem('token');
       const response = await axios.put( data.localhost + "Notes", id, 
       {
          headers: 

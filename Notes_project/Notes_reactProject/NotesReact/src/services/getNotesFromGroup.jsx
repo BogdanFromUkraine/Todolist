@@ -4,7 +4,7 @@ import data from "../dataJSON/data.json"
 export default async function GetNotesFromGroup(groupId) 
 {
    try {
-      const jwtToken = await localStorage.getItem('token');
+      const jwtToken =  localStorage.getItem('token');
       const response = await axios.get(data.localhost + `Group/GetNotesFromGroup/${groupId}`, {
          headers: {
             'Content-Type' : 'application/json',

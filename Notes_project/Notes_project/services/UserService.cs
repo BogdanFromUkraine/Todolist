@@ -37,7 +37,8 @@ namespace Notes_project.services
         public async Task<string> Login(string email, string password) 
         {
             //провірити email
-            var user = _userRepository.Get(u => u.Email == email);
+            //var user = _userRepository.Get(u => u.Email == email);
+            var user = await _userRepository.GetUser(email);
 
             //перевірити password
             var result = _passwordHasher.Verify(password, user.PasswordHash);

@@ -52,11 +52,16 @@ namespace Notes_project
 
             //створюю конфігурацію, щоб пізніше переадти через DI
             builder.Services.Configure<AuthorizationOptions>(configuration.GetSection(nameof(AuthorizationOptions)));
-            
+
+            //тестовий код
+            //builder.Services.AddControllers().AddJsonOptions(options =>
+            //{
+            //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+            //});
 
 
 
-            
+
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => 
                 {
@@ -89,6 +94,14 @@ namespace Notes_project
                 });
 
             builder.Services.AddAuthorization();
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                {
+                        policy.Requirements.Add(new PermissionRequirement([Enum.Permission.Create]));
+                        policy.Requirements.Add(new PermissionRequirement([Enum.Permission.Delete]));
+                }); 
+            });
 
             builder.Services.AddScoped<INotesRepository, NotesRepository>();
             builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
@@ -146,7 +159,7 @@ namespace Notes_project
             app.MapPost("get", () =>
             {
                 return Results.Ok("fjdlk");
-            }).RequireAuthorization().RequirePermissions(Enum.Permission.Read);
+            }).RequireAuthorization().RequirePermissions(Enum.Permission.Create);
 
             app.Run();
         }

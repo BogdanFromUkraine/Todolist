@@ -12,13 +12,14 @@ import AuthorizationPage from './AuthorizationPage';
 
 export const App = observer(()=>
   {
-  const {get_AllNotes, notess} = useStores();
+  const {get_AllNotes, notess, get_User_Role} = useStores();
 
   useEffect(()=>
     {
       async function foo() 
       {
         await get_AllNotes();
+        await get_User_Role();
       }
       foo();
   

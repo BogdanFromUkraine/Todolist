@@ -5,7 +5,7 @@ export default async function GetGroupData(groupId)
 {
    
    try {
-      const jwtToken = await localStorage.getItem('token');
+      const jwtToken =  localStorage.getItem('token');
       const response = await axios.get(data.localhost + `Group/GetGroupData/${groupId}`, {
          headers: {
            'Authorization': `Bearer ${jwtToken}` // Додаємо токен у заголовок
