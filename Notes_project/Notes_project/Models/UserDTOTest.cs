@@ -9,6 +9,7 @@
         public string? UserPhoto { get; set; } = string.Empty;
 
         public ICollection<string> Roles { get; set; } = [];
+        public ICollection<int> Groups { get; set; } = [];
         
     }
 }

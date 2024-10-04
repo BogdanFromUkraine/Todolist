@@ -154,6 +154,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             {
                 var user = _db.User
                 .Include(u => u.Roles)
+                .Include(u => u.Groups)
                 .FirstOrDefault(u => u.Email == email);
 
                 var userDto = new UserDTOTest
@@ -163,7 +164,8 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                     UserName = user.UserName,
                     PasswordHash = user.PasswordHash,
                     UserPhoto = user.UserPhoto,
-                    Roles = user.Roles.Select(r => r.Name).ToList() // Додаємо тільки назви ролей
+                    Roles = user.Roles.Select(r => r.Name).ToList(), // Додаємо тільки назви ролей
+                    Groups = user.Groups.Select(r => r.GroupId).ToList()
 
 
                 };

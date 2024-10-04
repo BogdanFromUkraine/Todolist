@@ -14,13 +14,14 @@ export const Group = observer(() =>
 {
     const [groupId, setGroupId] = useState();
 
-    const {get_All_Group, notesOfGroup, userRole} = useStores();
+    const {get_All_Group, notesOfGroup, userRole, groups} = useStores();
 
     useEffect(() => 
         {
             async function getAllGroups() 
             {
                 await get_All_Group();
+                
             }
             getAllGroups();
             console.log(userRole);

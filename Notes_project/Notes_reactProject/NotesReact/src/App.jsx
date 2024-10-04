@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './styles/App.css'
 import { observer } from "mobx-react-lite";
 import { useStores } from '../store/root-store-context';
-import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import {Await, createBrowserRouter, RouterProvider} from "react-router-dom"
 import MainPage from './MainPage';
 import {Group} from './Group';
 import {People} from './People';
@@ -12,7 +12,7 @@ import AuthorizationPage from './AuthorizationPage';
 
 export const App = observer(()=>
   {
-  const {get_AllNotes, notess, get_User_Role} = useStores();
+  const {get_AllNotes, notess, get_User_Role, get_All_Group} = useStores();
 
   useEffect(()=>
     {
@@ -20,6 +20,7 @@ export const App = observer(()=>
       {
         await get_AllNotes();
         await get_User_Role();
+        await get_All_Group();
       }
       foo();
   

@@ -23,12 +23,18 @@ namespace Notes_project.services.Authentication
                 new Claim("userName", user.UserName.ToString()),
                 new Claim("userEmail", user.Email.ToString())
             };
-            //Claim[] claim = [
-            //    new("userId", user.Id.ToString()),
-            //];
+            
+            //додаю роль до claim
             foreach (var role in user.Roles)
             {
                 claims.Add(new Claim("role", role.ToString()));
+            }
+
+
+            //додаю групи до яких відноситься user до claim
+            foreach (var group in user.Groups)
+            {
+                claims.Add(new Claim("group", group.ToString()));
             }
 
             //алгоритм за яким буде кодуватися токен
