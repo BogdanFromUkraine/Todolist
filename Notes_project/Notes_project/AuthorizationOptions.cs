@@ -1,6 +1,4 @@
-﻿using Notes_project.Models;
-
-namespace Notes_project
+﻿namespace Notes_project
 {
     //цей клас створений, щоб получити інформацію з appsettings, а саме AuthorizationOptions
     //щоб получити ці дані, я буду використовувати IOptions
@@ -9,7 +7,7 @@ namespace Notes_project
         public RolePermissions[] RolePermissions { get; set; } = [];
     }
 
-    public class RolePermissions 
+    public class RolePermissions
     {
         public string Role { get; set; } = string.Empty;
 

@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Notes_project.Models;
-using System.Data.SqlTypes;
 
 namespace Notes_project.Services
 {
@@ -10,6 +8,7 @@ namespace Notes_project.Services
         {
             Permissions = permissions;
         }
+
         public Enum.Permission[] Permissions { get; set; } = [];
     }
 }

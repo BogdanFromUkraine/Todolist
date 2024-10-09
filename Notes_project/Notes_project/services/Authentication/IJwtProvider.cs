@@ -1,4 +1,4 @@
-﻿using Notes_project.Models;
+﻿using Notes_project.Models.ModelsDTO;
 
 namespace Notes_project.services.Authentication
 {

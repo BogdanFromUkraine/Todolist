@@ -16,7 +16,6 @@ namespace Notes_project.Configuration
                 .UsingEntity<UserRoles>(
                 l => l.HasOne<Role>().WithMany().HasForeignKey(r => r.RoleId),
                 r => r.HasOne<User>().WithMany().HasForeignKey(u => u.UserId));
-                
         }
     }
 }

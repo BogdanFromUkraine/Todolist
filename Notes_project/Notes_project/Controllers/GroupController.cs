@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Notes_project.Models;
-using ProjectTrackingSpotify.DataAccess.Repository;
+﻿using Microsoft.AspNetCore.Mvc;
+using Notes_project.Models.ModelsDTO;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
-using System.IO.Compression;
-using System.Text;
-using System.Text.Json;
-using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Notes_project.Controllers
 {
@@ -22,13 +15,14 @@ namespace Notes_project.Controllers
         {
             _groupRepository = groupRepository;
             _userRepository = userRepository;
-
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateGroup([FromBody] GroupDTO group)
         {
             await _groupRepository.CreateGroup(group);
             await _groupRepository.Save();
+
             return Ok();
         }
 
@@ -36,7 +30,6 @@ namespace Notes_project.Controllers
         public async Task<IActionResult> AddUserToGroup(int groupId, string userId)
         {
             var userIdGuid = Guid.Parse(userId);
-
             var user = _userRepository.Get(u => u.Id == userIdGuid);
 
             await _groupRepository.AddUserToGroup(groupId, user);
@@ -54,16 +47,17 @@ namespace Notes_project.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
 
             return Ok();
         }
+
         [HttpGet("GetNotesFromGroup/{groupId}")]
         public async Task<IActionResult> GetNotesFromGroup(int groupId)
         {
             var notes = await _groupRepository.GetNotesFromGroup(groupId);
+
             return Ok(notes);
         }
 
@@ -71,12 +65,15 @@ namespace Notes_project.Controllers
         public async Task<IActionResult> DeleteNoteFromGroup(int groupId, int noteId)
         {
             await _groupRepository.DeleteNoteFromGroup(groupId, noteId);
+
             return Ok();
         }
+
         [HttpPut("UpdateNoteFromGroup/{groupId}/{noteId}")]
         public async Task<IActionResult> UpdateNoteFromGroup(int groupId, int noteId)
         {
             await _groupRepository.UpdateNoteFromGroup(groupId, noteId);
+
             return Ok();
         }
 
@@ -84,6 +81,7 @@ namespace Notes_project.Controllers
         public async Task<IActionResult> GetAllGroup()
         {
             var allGroup = _groupRepository.GetAll();
+
             return Ok(allGroup);
         }
 
@@ -94,12 +92,14 @@ namespace Notes_project.Controllers
 
             return Ok(groupData);
         }
+
         [HttpDelete("DeleteUserFromGroup/{groupId}/{userId}")]
         public async Task<IActionResult> DeleteUserFromGroup(int groupId, string userId)
         {
             var userIdGuid = Guid.Parse(userId);
 
             await _groupRepository.DeleteUserFromGroup(groupId, userIdGuid);
+
             return Ok();
         }
     }

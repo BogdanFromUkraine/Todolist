@@ -8,7 +8,6 @@ namespace Notes_project.Configuration
     {
         public void Configure(EntityTypeBuilder<Notes> builder)
         {
-           
         }
     }
 }

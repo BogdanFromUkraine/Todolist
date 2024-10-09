@@ -1,6 +1,4 @@
-﻿using Microsoft.Identity.Client;
-using Notes_project.Models;
-using Notes_project.Services;
+﻿using Notes_project.Services;
 
 namespace Notes_project.Extensions
 {
@@ -10,7 +8,7 @@ namespace Notes_project.Extensions
             this TBuilder builder, params Enum.Permission[] permissions)
             where TBuilder : IEndpointConventionBuilder
         {
-            return builder.RequireAuthorization(policy => 
+            return builder.RequireAuthorization(policy =>
             {
                 policy.AddRequirements(new PermissionRequirement(permissions));
             });

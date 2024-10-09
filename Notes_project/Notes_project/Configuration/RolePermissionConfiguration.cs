@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Notes_project.Enum;
 using Notes_project.Models;
 
 namespace Notes_project.Configuration
@@ -13,9 +12,10 @@ namespace Notes_project.Configuration
         {
             _authorization = authorization;
         }
+
         public void Configure(EntityTypeBuilder<RolePermission> builder)
         {
-            builder.HasKey(r => new { r.RoleId, r.PermissionId});
+            builder.HasKey(r => new { r.RoleId, r.PermissionId });
 
             var rolePermissions = new RolePermission[]
          {
@@ -29,14 +29,15 @@ namespace Notes_project.Configuration
 
             builder.HasData(rolePermissions);
         }
-        private RolePermission[] ParseRolePermissions()  
+
+        private RolePermission[] ParseRolePermissions()
         {
             return _authorization.RolePermissions
                 .SelectMany(rp => rp.Permissions
                 .Select(p => new RolePermission
                 {
                     PermissionId = (int)System.Enum.Parse<Enum.Permission>(p),
-                    RoleId = (int)System.Enum.Parse<Enum.Role>(rp.Role)  
+                    RoleId = (int)System.Enum.Parse<Enum.Role>(rp.Role)
                 }))
                 .ToArray();
         }

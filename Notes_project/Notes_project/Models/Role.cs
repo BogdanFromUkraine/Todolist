@@ -11,8 +11,8 @@ namespace Notes_project.Models
         //реазізовані зв'язки tables
         [JsonIgnore]
         public ICollection<Permission> Permissions { get; set; } = [];
+
         [JsonIgnore]
         public ICollection<User> Users { get; set; } = [];
     }
 }
-

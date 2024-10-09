@@ -1,10 +1,4 @@
-﻿using Notes_project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 namespace WebApp.DataAccess.Repository.IRepository
 {
@@ -12,11 +6,15 @@ namespace WebApp.DataAccess.Repository.IRepository
     {
         //T - Product
         IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null);
+
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
+
         Task Add(T entity); //цей метод асинхронний черз Task
+
         Task Remove(T entity);
 
         Task Update(T entity);
+
         Task Save();
     }
 }

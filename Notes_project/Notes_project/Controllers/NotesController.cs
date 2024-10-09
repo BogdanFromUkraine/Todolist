@@ -1,19 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Notes_project.Models;
-using Notes_project.services.Authentication;
+using Notes_project.Models.ModelsDTO;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
 
 namespace Notes_project.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Notes")]
     [ApiController]
     public class NotesController : ControllerBase
     {
         private readonly INotesRepository _notesRepository;
-        
         private readonly IUserRepository _userRepository;
+
         public NotesController(INotesRepository notesRepository,
             IUserRepository userRepository)
         {
@@ -21,13 +20,12 @@ namespace Notes_project.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpGet("ReciveNote")]
+        [HttpGet]
         [Authorize]
-        public IActionResult ReciveNote([FromQuery] int Id) 
+        public IActionResult ReciveNote([FromQuery] int Id)
         {
-            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            var userIdClaim = User.FindFirst("userId");
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
-
             var note = _userRepository.GetUserNotes(userId, Id).GetAwaiter().GetResult();
 
             return Ok(note);
@@ -35,25 +33,23 @@ namespace Notes_project.Controllers
 
         [HttpGet("GetAllNotes")]
         [Authorize]
-        public IActionResult GetAllNotes() 
+        public IActionResult GetAllNotes()
         {
-            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
-            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) {}
-
+            var userIdClaim = User.FindFirst("userId");
+            if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
             var notes = _userRepository.GetAllUserNotes(userId).GetAwaiter().GetResult();
 
             return Ok(notes);
         }
 
-        [HttpPost("Create")]
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create([FromBody] NotesDTO note) 
+        public async Task<IActionResult> Create([FromBody] NotesDTO note)
         {
             try
             {
-                var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+                var userIdClaim = User.FindFirst("userId");
                 if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
-
                 var user = _userRepository.Get(u => u.Id == userId);
                 var notes = new Notes()
                 {
@@ -63,27 +59,22 @@ namespace Notes_project.Controllers
                     IsCompleted = note.IsCompleted,
                     PhotoCode = note.PhotoCode,
                 };
-
                 user.Notes.Add(notes);
-
                 await _userRepository.Save();
 
                 return Ok("Ви успішно створили замітку");
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-           
         }
-        
+
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> Delete(int Id) 
+        public async Task<IActionResult> Delete(int Id)
         {
-            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            var userIdClaim = User.FindFirst("userId");
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
 
             _userRepository.RemoveUserNote(userId, Id).GetAwaiter().GetResult();
@@ -94,23 +85,14 @@ namespace Notes_project.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateNote([FromBody] int Id) 
+        public async Task<IActionResult> UpdateNote([FromBody] int Id)
         {
-            var userIdClaim = User.FindFirst("userId"); //потрібно якось винести
+            var userIdClaim = User.FindFirst("userId");
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
 
             await _userRepository.UpdateUserNote(userId, Id);
-            //Notes note = _notesRepository.Get(u => u.Id == Id);
-            //note.IsCompleted = note.IsCompleted ? false : true;
-
-
-
-            // _notesRepository.Update(note);
-            _userRepository.Save();
 
             return Ok();
         }
-
-        
     }
 }

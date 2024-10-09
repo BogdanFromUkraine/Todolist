@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Notes_project.Enum;
 using Notes_project.Models;
 
 namespace Notes_project.Configuration
@@ -28,6 +27,5 @@ namespace Notes_project.Configuration
 
             builder.HasData(roles);
         }
-
     }
 }

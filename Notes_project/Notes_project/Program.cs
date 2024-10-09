@@ -1,22 +1,16 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Notes_project.DataAccess;
-using Notes_project.Enum;
 using Notes_project.Extensions;
-using Notes_project.Models;
 using Notes_project.services;
 using Notes_project.services.Authentication;
 using Notes_project.Services;
 using ProjectTrackingSpotify.DataAccess.Repository;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
-using System;
 using System.IO.Compression;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace Notes_project
@@ -40,7 +34,6 @@ namespace Notes_project
                         policy.AllowAnyHeader();
                         policy.AllowAnyMethod();
                         policy.AllowCredentials();
-
                     });
             });
 
@@ -59,13 +52,10 @@ namespace Notes_project
             //    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
             //});
 
-
-
-
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options => 
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
-                    options.TokenValidationParameters = new() 
+                    options.TokenValidationParameters = new()
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
@@ -80,13 +70,13 @@ namespace Notes_project
                         OnMessageReceived = context =>
                         {
                             context.Token = context.Request.Cookies["2"];
-                          //  context.Token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+                            //  context.Token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
                             return Task.CompletedTask;
                         },
                         OnAuthenticationFailed = context =>
                         {
                             // Логування помилки
-                            
+
                             Console.WriteLine($"Authentication failed: {context.Exception.Message}");
                             return Task.CompletedTask;
                         }
@@ -98,9 +88,9 @@ namespace Notes_project
             {
                 options.AddPolicy("Admin", policy =>
                 {
-                        policy.Requirements.Add(new PermissionRequirement([Enum.Permission.Create]));
-                        policy.Requirements.Add(new PermissionRequirement([Enum.Permission.Delete]));
-                }); 
+                    policy.Requirements.Add(new PermissionRequirement([Enum.Permission.Create]));
+                    policy.Requirements.Add(new PermissionRequirement([Enum.Permission.Delete]));
+                });
             });
 
             builder.Services.AddScoped<INotesRepository, NotesRepository>();
@@ -118,7 +108,6 @@ namespace Notes_project
                 options.EnableForHttps = true;
                 options.Providers.Add<GzipCompressionProvider>();
                 options.Providers.Add<BrotliCompressionProvider>();
-
             });
             builder.Services.Configure<GzipCompressionProviderOptions>(options =>
             {
@@ -147,8 +136,6 @@ namespace Notes_project
 
             app.UseResponseCompression();
             app.MapControllers();
-
-            
 
             app.UseAuthentication();
 

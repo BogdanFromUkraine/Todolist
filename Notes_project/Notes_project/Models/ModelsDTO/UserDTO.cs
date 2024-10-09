@@ -1,12 +1,9 @@
-﻿namespace Notes_project.Models
+﻿namespace Notes_project.Models.ModelsDTO
 {
     public class UserDTO
     {
-      
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
-
-      
     }
 }

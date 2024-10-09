@@ -1,9 +1,8 @@
-.main 
-{
-    display: flex;
+.main {
+  display: flex;
 }
 
-.cardsGroup{
-    display: flex;
-    flex-direction: column;
+.cardsGroup {
+  display: flex;
+  flex-direction: column;
 }

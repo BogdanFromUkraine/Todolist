@@ -1,4 +1,4 @@
-﻿namespace Notes_project.Models
+﻿namespace Notes_project.Models.ModelsDTO
 {
     public class UserDTOTest
     {
@@ -10,6 +10,5 @@
 
         public ICollection<string> Roles { get; set; } = [];
         public ICollection<int> Groups { get; set; } = [];
-        
     }
 }

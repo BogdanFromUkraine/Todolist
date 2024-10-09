@@ -1,6 +1,4 @@
-﻿using Notes_project.Models;
-
-namespace Notes_project.Services
+﻿namespace Notes_project.Services
 {
     public interface IPermissionService
     {

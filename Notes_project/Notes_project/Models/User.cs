@@ -4,10 +4,10 @@
     {
         public User()
         {
-            
         }
+
         // я створив простий model, просто добавив метод по створення юсера, це зручно
-        private User(Guid id, string userName, string passwordHash, string email) 
+        private User(Guid id, string userName, string passwordHash, string email)
         {
             Id = id;
             UserName = userName;
@@ -26,7 +26,7 @@
 
         public ICollection<Group> Groups { get; set; } = [];
 
-        public static User Create(Guid id, string userName, string passwordHash, string email) 
+        public static User Create(Guid id, string userName, string passwordHash, string email)
         {
             return new User(id, userName, passwordHash, email);
         }

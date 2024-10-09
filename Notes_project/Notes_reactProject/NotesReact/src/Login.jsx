@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import styles from "./styles/loginPage.module.css"
-import { useStores } from '../store/root-store-context';
+import styles from "./styles/loginPage.module.css";
+import { useStores } from "../store/root-store-context";
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const{login_User} = useStores();
+  const { login_User } = useStores();
 
   // Обробник форми
   const handleSubmit = async (event) => {
@@ -40,13 +40,13 @@ function LoginPage() {
             className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.button}>Увійти</button>
+        <button type="submit" className={styles.button}>
+          Увійти
+        </button>
         {error && <p className={styles.error}>{error}</p>}
       </form>
-
     </div>
   );
 }
-
 
 export default LoginPage;

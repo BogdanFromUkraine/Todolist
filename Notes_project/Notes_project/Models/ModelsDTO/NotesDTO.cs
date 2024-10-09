@@ -1,4 +1,4 @@
-﻿namespace Notes_project.Models
+﻿namespace Notes_project.Models.ModelsDTO
 {
     public class NotesDTO
     {
@@ -9,4 +9,3 @@
         public string PhotoCode { get; set; }
     }
 }
-    

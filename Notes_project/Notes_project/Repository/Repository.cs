@@ -1,15 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Notes_project.DataAccess;
-using Notes_project.Enum;
-using Notes_project.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using WebApp.DataAccess.Repository.IRepository;
-
 
 namespace WebApp.DataAccess.Repository
 {
@@ -25,23 +17,22 @@ namespace WebApp.DataAccess.Repository
         //цей метод асинхронний через Task
         public async Task Add(T entity)
         {
-             _db.Add(entity);
+            _db.Add(entity);
         }
-
 
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
-			if (!string.IsNullOrEmpty(includeProperties))
-			{
-				foreach (var includeProp in includeProperties
-					.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-				{
-					query = query.Include(includeProp);
-				}
-			}
-			return query.FirstOrDefault();
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.FirstOrDefault();
         }
 
         public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter = null, string? includeProperties = null)
@@ -52,7 +43,6 @@ namespace WebApp.DataAccess.Repository
             {
                 query = query.Where(filter);
             }
-
 
             if (!string.IsNullOrEmpty(includeProperties))
             {
@@ -79,6 +69,5 @@ namespace WebApp.DataAccess.Repository
         {
             dbSet.Update(entity);
         }
-
     }
 }

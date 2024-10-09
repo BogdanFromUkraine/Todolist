@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Notes_project.Models;
+using Notes_project.Models.ModelsDTO;
 using Notes_project.services.Authentication;
 using ProjectTrackingSpotify.DataAccess.Repository.IRepository;
-using System.Security.Claims;
 
 namespace Notes_project.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/User")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -18,13 +17,13 @@ namespace Notes_project.Controllers
         {
             _userRepository = userRepository;
             _userService = userService;
-
         }
 
         [HttpPost("Login")]
         public IActionResult Login([FromBody] UserLoginDTO user)
         {
             var JwtToken = _userService.Login(user.Email, user.Password);
+
             return Ok(JwtToken);
         }
 
@@ -32,12 +31,13 @@ namespace Notes_project.Controllers
         public IActionResult Register([FromBody] UserDTO user)
         {
             var JwtToken = _userService.Register(user.UserName, user.Email, user.Password);
+
             return Ok(JwtToken);
         }
 
         [HttpGet("GetUserData")]
         [Authorize]
-        public IActionResult GetUserData() 
+        public IActionResult GetUserData()
         {
             var userIdClaim = User.FindFirst("userId");
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
@@ -46,13 +46,12 @@ namespace Notes_project.Controllers
             return Ok(new { user.UserName, user.Email, user.UserPhoto });
         }
 
-        [HttpPost("UploadUserPhoto")]
+        [HttpPost]
         [Authorize]
         public IActionResult UploadUserPhoto([FromBody] string userPhoto)
         {
             var userIdClaim = User.FindFirst("userId");
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }
-
             var user = _userRepository.Get(u => u.Id == userId);
             user.UserPhoto = userPhoto;
 
@@ -63,12 +62,11 @@ namespace Notes_project.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetAllUser() 
+        public IActionResult GetAllUser()
         {
             var users = _userRepository.GetAll();
 
             return Ok(users);
         }
-
     }
 }

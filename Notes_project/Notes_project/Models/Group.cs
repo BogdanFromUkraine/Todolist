@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Notes_project.Models
+﻿namespace Notes_project.Models
 {
     public class Group
     {

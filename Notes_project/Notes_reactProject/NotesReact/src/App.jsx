@@ -1,72 +1,67 @@
-import { useEffect, useState } from 'react'
-import './styles/App.css'
+import { useEffect, useState } from "react";
+import "./styles/App.css";
 import { observer } from "mobx-react-lite";
-import { useStores } from '../store/root-store-context';
-import {Await, createBrowserRouter, RouterProvider} from "react-router-dom"
-import MainPage from './MainPage';
-import {Group} from './Group';
-import {People} from './People';
-import {User} from './User';
-import Root from './Root';
-import AuthorizationPage from './AuthorizationPage';
+import { useStores } from "../store/root-store-context";
+import { Await, createBrowserRouter, RouterProvider } from "react-router-dom";
+import MainPage from "./MainPage";
+import { Group } from "./Group";
+import { People } from "./People";
+import { User } from "./User";
+import Root from "./Root";
+import AuthorizationPage from "./AuthorizationPage";
 
-export const App = observer(()=>
-  {
-  const {get_AllNotes, notess, get_User_Role, get_All_Group} = useStores();
+export const App = observer(() => {
+  const { get_AllNotes, notess, get_User_Role, get_All_Group } = useStores();
 
-  useEffect(()=>
+  useEffect(() => {
+    async function foo() {
+      await get_AllNotes();
+      await get_User_Role();
+      await get_All_Group();
+    }
+    foo();
+  }, []);
+
+  const router = createBrowserRouter([
     {
-      async function foo() 
-      {
-        await get_AllNotes();
-        await get_User_Role();
-        await get_All_Group();
-      }
-      foo();
-  
-    },[])
+      path: "/",
+      element: <Root />,
+      children: [
+        {
+          path: "/",
+          element: <MainPage notess={notess} />,
+          errorElement: <div>404 Not Found</div>,
+        },
+        {
+          path: "Group",
+          element: <Group />,
+          errorElement: <div>404 Not Found</div>,
+        },
+        {
+          path: "People",
+          element: <People />,
+          errorElement: <div>404 Not Found</div>,
+        },
+        {
+          path: "User",
+          element: <User />,
+          errorElement: <div>404 Not Found</div>,
+        },
+        {
+          path: "Authorize",
+          element: <AuthorizationPage />,
+          errorElement: <div>404 Not Found</div>,
+        },
+      ],
+    },
+  ]);
 
-    const router = createBrowserRouter([
-      {
-        path: '/',
-        element: <Root/>,
-        children: [
-          {
-            path: '/',
-            element: <MainPage notess={notess} />,
-           errorElement: <div>404 Not Found</div>,
-          },
-          {
-            path: 'Group',
-            element: <Group/>,
-           errorElement: <div>404 Not Found</div>,
-          },
-          {
-            path: 'People',
-            element: <People/>,
-           errorElement: <div>404 Not Found</div>,
-          },
-          {
-            path: 'User',
-            element: <User/>,
-           errorElement: <div>404 Not Found</div>,
-          },
-          {
-            path: "Authorize",
-            element: <AuthorizationPage/>,
-            errorElement: <div>404 Not Found</div>,
-          }
-        ]
-      },
-
-    ])
-    
   return (
-   <>
-   <RouterProvider router={router} >
-   <Root/>
-   <footer>FOOTER</footer>
-   </RouterProvider>
+    <>
+      <RouterProvider router={router}>
+        <Root />
+        <footer>FOOTER</footer>
+      </RouterProvider>
     </>
-)})
-
+  );
+});

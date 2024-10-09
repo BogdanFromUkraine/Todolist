@@ -1,7 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Notes_project.Models;
+using Notes_project.Models.ModelsDTO;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -10,26 +9,27 @@ namespace Notes_project.services.Authentication
     public class JwtProvider : IJwtProvider
     {
         private readonly IConfiguration _config;
+
         public JwtProvider(IConfiguration config)
         {
             _config = config;
         }
+
         public string GenerateToken(UserDTOTest user)
         {
             //створюю додаткову інформацію, щоб це скомпанувати це у JWT токен і потім витягнути додаткову інфу
-            var claims = new List<Claim>() 
+            var claims = new List<Claim>()
             {
                 new Claim("userId", user.Id.ToString()),
                 new Claim("userName", user.UserName.ToString()),
                 new Claim("userEmail", user.Email.ToString())
             };
-            
+
             //додаю роль до claim
             foreach (var role in user.Roles)
             {
                 claims.Add(new Claim("role", role.ToString()));
             }
-
 
             //додаю групи до яких відноситься user до claim
             foreach (var group in user.Groups)

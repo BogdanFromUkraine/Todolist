@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Notes_project.Enum;
-using Notes_project.Models;
 using Permission = Notes_project.Models.Permission;
 
 namespace Notes_project.Configuration
@@ -14,7 +12,7 @@ namespace Notes_project.Configuration
 
             // код, який призначений для зберігання permission у бд при запуску програми
             var permission = Enum.Permission.GetValues<Enum.Permission>()
-                .Select(p => new Permission 
+                .Select(p => new Permission
                 {
                     Id = (int)p,
                     Name = p.ToString()

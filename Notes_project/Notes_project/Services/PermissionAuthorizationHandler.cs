@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Notes_project.Services
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
         private readonly IServiceScopeFactory _serviceProviderFactory;
+
         public PermissionAuthorizationHandler(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceProviderFactory = serviceScopeFactory;
         }
+
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
             var userId = context.User.Claims.FirstOrDefault(
@@ -26,12 +26,12 @@ namespace Notes_project.Services
             var permissionService = scope.ServiceProvider
                 .GetService<IPermissionService>();
 
-            var permissions  = await permissionService.GetPermissionsAsync(id);
+            var permissions = await permissionService.GetPermissionsAsync(id);
 
-            if (permissions.Intersect(requirement.Permissions).Any()) 
+            if (permissions.Intersect(requirement.Permissions).Any())
             {
                 context.Succeed(requirement);
             }
         }
     }
-}   
+}

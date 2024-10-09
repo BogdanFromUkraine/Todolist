@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import styles from "./styles/registerPage.module.css"
-import { useStores } from '../store/root-store-context';
-import { observer } from 'mobx-react-lite';
-
+import React, { useState } from "react";
+import axios from "axios";
+import styles from "./styles/registerPage.module.css";
+import { useStores } from "../store/root-store-context";
+import { observer } from "mobx-react-lite";
 
 export const RegisterPage = observer(() => {
-  const [userName, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const {register_User} = useStores();
+  const { register_User } = useStores();
 
   // Обробник форми реєстрації
   const handleSubmit = async (event) => {
@@ -18,9 +17,9 @@ export const RegisterPage = observer(() => {
     await register_User(userName, email, password);
 
     //очищення форми
-    setUsername('');
-    setEmail('');
-    setPassword('');
+    setUsername("");
+    setEmail("");
+    setPassword("");
 
     alert("Успішно зареєструвався");
   };
@@ -59,9 +58,10 @@ export const RegisterPage = observer(() => {
             className={styles.input}
           />
         </div>
-        <button type="submit" className={styles.button}>Зареєструватися</button>
+        <button type="submit" className={styles.button}>
+          Зареєструватися
+        </button>
       </form>
     </div>
   );
-})
-
+});

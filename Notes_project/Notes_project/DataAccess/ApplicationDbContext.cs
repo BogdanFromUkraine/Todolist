@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Notes_project.Configuration;
-using Notes_project.Enum;
 using Notes_project.Models;
-using Notes_project.services.Authentication;
-using System.Collections.Generic;
 
 namespace Notes_project.DataAccess
 {
@@ -14,7 +9,6 @@ namespace Notes_project.DataAccess
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,
         IOptions<AuthorizationOptions> authOptions) : DbContext(options)
     {
-      
         public DbSet<Notes> Notes { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Models.Permission> Permissions { get; set; }
@@ -28,7 +22,7 @@ namespace Notes_project.DataAccess
             //цей код автоматично застосовує всі конфігурації
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
-            modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));  
+            modelBuilder.ApplyConfiguration(new RolePermissionConfiguration(authOptions.Value));
         }
     }
 }

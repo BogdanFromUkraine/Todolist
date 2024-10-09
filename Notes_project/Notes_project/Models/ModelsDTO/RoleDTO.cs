@@ -1,4 +1,4 @@
-﻿namespace Notes_project.Models
+﻿namespace Notes_project.Models.ModelsDTO
 {
     public class RoleDTO
     {
@@ -7,7 +7,5 @@
 
         //добавляються дозволи до ролі, типу юсеру можна тільки читати, а адміну редагувати
         //реазізовані зв'язки tables
-
     }
 }
-
