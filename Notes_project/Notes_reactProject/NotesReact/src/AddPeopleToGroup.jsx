@@ -20,7 +20,7 @@ export const AddPeopleToGroup = observer(({ groupId }) => {
         : console.log("Choose group");
     };
     getUsers();
-  }, [groupId]);
+  }, [groupId, users]);
 
   async function selectUser() {
     const select = document.getElementById("user-select");
