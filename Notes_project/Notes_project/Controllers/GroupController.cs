@@ -69,7 +69,7 @@ namespace Notes_project.Controllers
             return Ok();
         }
 
-        [HttpPut("UpdateNoteFromGroup/{groupId}/{noteId}")]
+        [HttpPut("{groupId}/{noteId}")]
         public async Task<IActionResult> UpdateNoteFromGroup(int groupId, int noteId)
         {
             await _groupRepository.UpdateNoteFromGroup(groupId, noteId);

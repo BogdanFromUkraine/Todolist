@@ -37,8 +37,8 @@ export const Cards = observer(({ notes }) => {
     });
   }
 
-  function handleClick(id) {
-    update_Note(id);
+  async function handleClick(id) {
+    await update_Note(id);
   }
   const listVariable = {
     visible: (i) => ({
