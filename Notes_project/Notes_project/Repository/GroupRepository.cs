@@ -11,6 +11,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
     {
         private ApplicationDbContext _db;
         internal DbSet<Group> dbSet;
+
         public GroupRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
@@ -28,6 +29,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
             _db.Group.Add(groupCreated);
             _db.Group.SingleAsync();
         }
+
         public async Task AddUserToGroup(int groupId, User user)
         {
             try
@@ -35,12 +37,15 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 var group = await _db.Group
                     .FirstOrDefaultAsync(g => g.GroupId == groupId);
                 group.Users.Add(user);
+
+                _db.SaveChangesAsync().GetAwaiter().GetResult();
             }
             catch (Exception)
             {
                 throw;
             }
         }
+
         public async Task AddNoteToGroup(int groupId, NotesDTO noteDTO)
         {
             try
@@ -62,6 +67,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 throw;
             }
         }
+
         public async Task<ICollection<Notes>> GetNotesFromGroup(int groupId)
         {
             try
@@ -78,6 +84,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 throw;
             }
         }
+
         public async Task DeleteNoteFromGroup(int groupId, int noteId)
         {
             try
@@ -93,6 +100,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 throw;
             }
         }
+
         public async Task UpdateNoteFromGroup(int groupId, int noteId)
         {
             try
@@ -109,6 +117,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 throw;
             }
         }
+
         public async Task<object> GetGroupData(int groupId)
         {
             var group = await _db.Group.Include(g => g.Users).Include(g => g.Notes).FirstOrDefaultAsync(g => g.GroupId == groupId);
@@ -126,6 +135,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
 
             return groupData;
         }
+
         public async Task DeleteUserFromGroup(int groupId, Guid userId)
         {
             try
@@ -134,7 +144,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 var deletedUser = group.Users.FirstOrDefault(u => u.Id == userId);
 
                 group.Users.Remove(deletedUser);
-                await _db.SaveChangesAsync();
+                _db.SaveChangesAsync().GetAwaiter().GetResult();
             }
             catch (Exception)
             {

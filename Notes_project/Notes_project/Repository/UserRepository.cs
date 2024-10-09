@@ -82,7 +82,7 @@ namespace ProjectTrackingSpotify.DataAccess.Repository
                 var note = user.Notes.FirstOrDefault(n => n.Id == noteId);
                 note.IsCompleted = note.IsCompleted ? false : true;
 
-                 _db.Update(note);
+                _db.Update(note);
                 _db.SaveChangesAsync().GetAwaiter().GetResult();
             }
             catch (Exception)

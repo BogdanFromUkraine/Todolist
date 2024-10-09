@@ -9,11 +9,13 @@ namespace WebApp.DataAccess.Repository
     {
         private readonly ApplicationDbContext _db;
         internal DbSet<T> dbSet;
+
         public Repository(ApplicationDbContext db)
         {
             _db = db;
             this.dbSet = _db.Set<T>();
         }
+
         //цей метод асинхронний через Task
         public async Task Add(T entity)
         {

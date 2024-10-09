@@ -85,7 +85,7 @@ namespace Notes_project.Controllers
 
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> UpdateNote([FromBody]int Id)
+        public async Task<IActionResult> UpdateNote([FromBody] int Id)
         {
             var userIdClaim = User.FindFirst("userId");
             if (Guid.TryParse(userIdClaim.Value, out Guid userId)) { }

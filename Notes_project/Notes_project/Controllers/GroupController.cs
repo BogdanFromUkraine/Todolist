@@ -33,7 +33,6 @@ namespace Notes_project.Controllers
             var user = _userRepository.Get(u => u.Id == userIdGuid);
 
             await _groupRepository.AddUserToGroup(groupId, user);
-            await _userRepository.Save();
 
             return Ok();
         }

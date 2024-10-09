@@ -5,13 +5,13 @@ export default async function RemoveUserFromGroup(groupId, id) {
   try {
     const jwtToken = localStorage.getItem("token");
     const response = await axios.delete(
-      data.localhost + `Group/${groupId}/${id}`,
+      data.localhost + `Group/DeleteUserFromGroup/${groupId}/${id}`,
       {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${jwtToken}`, // Додаємо токен у заголовок
         },
-      },
+      }
     );
     return response;
   } catch (error) {
